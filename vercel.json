@@ -1,0 +1,46 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/pixiv/:path*",
+      "destination": "/api/pixiv"
+    },
+    {
+      "source": "/api/ip",
+      "destination": "/api/ip/ip"
+    },
+    {
+      "source": "/cdn/:path*",
+      "destination": "/api/cdn/image"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/index.html",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent"
+        }
+      ]
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(js|css|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*", "src/**/*.tsx", "api/**/*"],
+  "exclude": ["src/**/__tests__/*"],
+  "compilerOptions": {
+    "composite": true,
+    "noEmit": false,
+    "allowJs": true,
+    "types": ["node"]
+  }
+}
