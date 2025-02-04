@@ -8,8 +8,8 @@ import {
 } from '@/components/ui/carousel'
 import { cn } from '@/lib/utils'
 import SkeletonImage from '@/components/common/Image/SkeletonImage'
-import { useCallback, useContext, useEffect, useMemo } from 'react'
-import { DataContext } from '@/pages/Pixiv/Show'
+import { useCallback, useContext, useMemo } from 'react'
+import { DataContext } from '@/pages/Pixiv/Show/context'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store'
 

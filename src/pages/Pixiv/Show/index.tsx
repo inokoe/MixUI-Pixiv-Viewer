@@ -1,10 +1,7 @@
 import PixivCarousel from '@/components/Pixiv/Carousel'
 import useShowData from '@/hooks/useShowData'
-import { createContext } from 'react'
-import { Illust } from '@/api/http/base.types'
 import Skeleton from '@/components/ui/skeleton'
-
-export const DataContext = createContext<Illust | null>(null)
+import { DataContext } from './context'
 
 const PixivShowBody = () => {
   return (

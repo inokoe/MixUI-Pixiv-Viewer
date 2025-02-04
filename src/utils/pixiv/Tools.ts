@@ -1,4 +1,11 @@
 import dayjs from 'dayjs'
+import dayjsTz from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
+import 'dayjs/locale/zh-cn'
+
+dayjs.extend(utc)
+dayjs.extend(dayjsTz)
+dayjs.locale('zh-cn')
 
 // 获取排行榜日期
 export const getRankDate = (time: number) => {
@@ -24,4 +31,11 @@ export const deduplicateById = <T extends { id: number }>(oldData: T[], newData:
   const seen = new Set(oldData.map(item => item.id))
   const uniqueNewData = newData.filter(item => !seen.has(item.id))
   return [...oldData, ...uniqueNewData]
+}
+
+// 判断时间是否在白天时段(5:00-14:59)
+export const isEarlyMorning = () => {
+  const now = dayjs().tz('Asia/Shanghai')
+  const hour = now.hour()
+  return hour >= 5 && hour < 14 // 返回true表示在5:00-14:59之间
 }
