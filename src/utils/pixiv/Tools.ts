@@ -32,10 +32,3 @@ export const deduplicateById = <T extends { id: number }>(oldData: T[], newData:
   const uniqueNewData = newData.filter(item => !seen.has(item.id))
   return [...oldData, ...uniqueNewData]
 }
-
-// 判断时间是否在白天时段(5:00-14:59)
-export const isEarlyMorning = () => {
-  const now = dayjs().tz('Asia/Shanghai')
-  const hour = now.hour()
-  return hour >= 5 && hour < 14 // 返回true表示在5:00-14:59之间
-}

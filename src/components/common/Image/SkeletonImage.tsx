@@ -135,7 +135,6 @@ const SkeletonImage = memo<ImageProps>(
               !isObserver ? 'opacity-1 blur-0 visible' : 'opacity-0 invisible blur-sm',
               `object-${objectFit}`
             )}
-            style={{ objectPosition: 'center' }}
           />
         </div>
       </div>

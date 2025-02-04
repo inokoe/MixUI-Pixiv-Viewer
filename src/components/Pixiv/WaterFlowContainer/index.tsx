@@ -92,10 +92,10 @@ const WaterFlowContainer = memo(({ mode, date, propData, observerFunc }: Props) 
   }, [lastIndex, mode, data.length])
 
   return (
-    <div className='w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 gap-3'>
+    <div className='w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3'>
       {/* 加载状态显示骨架屏 */}
       {data.length === 0 ? (
-        <div className='col-span-2 sm:col-span-3 md:col-span-3 lg:col-span-5'>
+        <div className='col-span-2 sm:col-span-3 md:col-span-3 lg:col-span-4 xl:col-span-5'>
           <Skeleton className='w-full h-screen' />
         </div>
       ) : (
@@ -104,7 +104,7 @@ const WaterFlowContainer = memo(({ mode, date, propData, observerFunc }: Props) 
           <div
             key={item.id}
             data-ref={index === lastIndex ? `observeMark-${mode}` : undefined}
-            className='overflow-hidden rounded-lg h-96'
+            className='overflow-hidden rounded-lg h-72 sm:h-72 md:h-80 lg:h-80 xl:h-80'
           >
             <ImageContainer
               ImgSrc={item.image_urls.square_medium}
