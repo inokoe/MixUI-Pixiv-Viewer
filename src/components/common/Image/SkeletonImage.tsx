@@ -108,7 +108,7 @@ const SkeletonImage = memo<ImageProps>(
       if (!isObserver) {
         const timer = setTimeout(() => {
           setLoading(true)
-        }, 1000)
+        }, 2000)
 
         return () => clearTimeout(timer)
       }

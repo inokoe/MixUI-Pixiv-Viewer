@@ -32,3 +32,9 @@ export const deduplicateById = <T extends { id: number }>(oldData: T[], newData:
   const uniqueNewData = newData.filter(item => !seen.has(item.id))
   return [...oldData, ...uniqueNewData]
 }
+
+export const isEarlyMorning = () => {
+  const now = dayjs().tz('Asia/Shanghai')
+  const hour = now.hour()
+  return hour >= 8 && hour < 12 // 返回true表示在8:00-12:59之间
+}
