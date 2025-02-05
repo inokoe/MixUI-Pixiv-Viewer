@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState, useCallback, memo } from 'react'
 import { useDispatch } from 'react-redux'
 import { setImageLoadInfo } from '@/store/reducers/performance'
 import Skeleton from '@/components/ui/skeleton'
-import { cn } from '@/lib/utils'
+import { cn, MyNProgress } from '@/lib/utils'
 import ImageCounter from '../ImageCounter'
 import ImageNavBar from '../ImageNavBar'
+
 /**
  * 创建全局共享的 IntersectionObserver
  * 用于监听图片元素是否进入视口，实现懒加载
@@ -127,13 +128,16 @@ const SkeletonImage = memo<ImageProps>(
 
     useEffect(() => {
       if (!isObserver) {
-        const timer = setTimeout(() => {
-          setLoading(true)
-        }, 2000)
-
-        return () => clearTimeout(timer)
+        MyNProgress.start()
+        const img = containerRef.current?.querySelector('img')
+        if (img) {
+          img.addEventListener('load', () => {
+            setLoading(true)
+            MyNProgress.done()
+          })
+        }
       }
-    }, [])
+    }, [handleImageLoaded])
 
     return (
       <div

@@ -2,8 +2,8 @@ import { Illust, PixivShowResponse } from '@/api/http/base.types'
 import getShow from '@/api/http/show'
 import { useParams } from 'react-router-dom'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { toast } from 'sonner'
 import { toastMsg } from '@/utils/pixiv/Tools'
+import { MyNProgress } from '@/lib/utils'
 
 const useShowData = () => {
   const [result, setResult] = useState<Illust | null>(null)
@@ -17,6 +17,7 @@ const useShowData = () => {
       const res = (await getShow(id)) as PixivShowResponse
       if ('illusts' in res.api && !Array.isArray(res.api.illusts)) {
         setResult(res.api.illusts)
+        MyNProgress.done()
         return
       } else {
         toastMsg('请求失败', '⚠️将在1秒后重试')
@@ -30,6 +31,7 @@ const useShowData = () => {
   useEffect(() => {
     if (id && /^\d+$/.test(id)) {
       if (flag.current) {
+        MyNProgress.start()
         requestShowData()
         flag.current = false
       }

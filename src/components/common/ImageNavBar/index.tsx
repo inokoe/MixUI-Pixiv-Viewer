@@ -55,7 +55,7 @@ const ImageNavBar = memo(
     )
 
     return (
-      <div className='absolute w-full flex justify-center items-center h-10 bottom-10 left-0'>
+      <div className='absolute w-full flex justify-center items-center h-10 bottom-10 left-0 animate-slide-up duration-500 ease-in-out'>
         <div className='px-3 py-2 flex items-center gap-4 bg-gray-900/50 rounded-full backdrop-blur-sm'>
           {/* 下载图标和文字 */}
           <div className='flex items-center gap-1.5 px-2'>

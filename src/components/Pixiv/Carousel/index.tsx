@@ -76,10 +76,11 @@ const PixivCarousel = ({ className }: { className?: string }) => {
                           className='w-full h-full'
                           objectFit='contain'
                           src={imgSrc(item)}
-                          isObserver={false}
+                          isObserver={true}
                           countLength={imageSrc.length}
                           countIndex={index}
                           imgDownloadInfo={item}
+                          countClassName='top-3 right-3 animate-slide-down duration-500 ease-in-out'
                         />
                       </CardContent>
                     </Card>
