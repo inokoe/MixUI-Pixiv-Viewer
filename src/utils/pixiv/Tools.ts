@@ -38,3 +38,8 @@ export const isEarlyMorning = () => {
   const hour = now.hour()
   return hour >= 8 && hour < 12 // 返回true表示在8:00-12:59之间
 }
+
+// 获取当前网站的域名，包括端口号等信息
+export const getCurrentDomain = () => {
+  return `${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}`
+}
