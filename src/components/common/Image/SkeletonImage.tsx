@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState, useCallback, memo } from 'react'
 import { useDispatch } from 'react-redux'
 import { setImageLoadInfo } from '@/store/reducers/performance'
-import Skeleton from '@/components/ui/skeleton'
 import { cn, MyNProgress } from '@/lib/utils'
 import ImageCounter from '../ImageCounter'
 import ImageNavBar from '../ImageNavBar'
+import SkeletonLoading from '../Loading/SkeletonLoading'
 
 /**
  * 创建全局共享的 IntersectionObserver
@@ -146,7 +146,12 @@ const SkeletonImage = memo<ImageProps>(
         style={style}
       >
         {/* 加载时显示骨架屏 */}
-        {!isLoading && <Skeleton className='h-full w-full' />}
+        {!isLoading && (
+          <SkeletonLoading
+            className='h-full w-full'
+            showMsg={imgDownloadInfo ? true : false}
+          />
+        )}
         {/* 图片容器 */}
         <div className='h-full w-full flex flex-col overflow-hidden select-none'>
           <img
