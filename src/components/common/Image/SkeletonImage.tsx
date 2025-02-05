@@ -4,7 +4,7 @@ import { setImageLoadInfo } from '@/store/reducers/performance'
 import Skeleton from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
 import ImageCounter from '../ImageCounter'
-
+import ImageNavBar from '../ImageNavBar'
 /**
  * 创建全局共享的 IntersectionObserver
  * 用于监听图片元素是否进入视口，实现懒加载
@@ -59,6 +59,11 @@ interface ImageProps {
   countLength?: number
   countIndex?: number
   countClassName?: string
+  imgDownloadInfo?: {
+    original: string
+    large: string
+    medium: string
+  }
 }
 
 /**
@@ -78,6 +83,7 @@ const SkeletonImage = memo<ImageProps>(
     countLength,
     countIndex,
     countClassName,
+    imgDownloadInfo,
   }) => {
     // 控制加载状态
     const [isLoading, setLoading] = useState<boolean>(false)
@@ -138,7 +144,7 @@ const SkeletonImage = memo<ImageProps>(
         {/* 加载时显示骨架屏 */}
         {!isLoading && <Skeleton className='h-full w-full' />}
         {/* 图片容器 */}
-        <div className='h-full w-full overflow-hidden select-none'>
+        <div className='h-full w-full flex flex-col overflow-hidden select-none'>
           <img
             data-src={src}
             src={!isObserver ? src : ''}
@@ -158,6 +164,7 @@ const SkeletonImage = memo<ImageProps>(
             className={countClassName || 'top-3 right-3'}
           />
         )}
+        {imgDownloadInfo && <ImageNavBar imgDownloadInfo={imgDownloadInfo} />}
       </div>
     )
   }

@@ -79,6 +79,7 @@ const PixivCarousel = ({ className }: { className?: string }) => {
                           isObserver={false}
                           countLength={imageSrc.length}
                           countIndex={index}
+                          imgDownloadInfo={item}
                         />
                       </CardContent>
                     </Card>
