@@ -3,6 +3,7 @@ import getShow from '@/api/http/show'
 import { useParams } from 'react-router-dom'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
+import { toastMsg } from '@/utils/pixiv/Tools'
 
 const useShowData = () => {
   const [result, setResult] = useState<Illust | null>(null)
@@ -18,16 +19,12 @@ const useShowData = () => {
         setResult(res.api.illusts)
         return
       } else {
-        toast('查看详情请求失败', {
-          description: '⚠️将在1秒后重试',
-        })
+        toastMsg('请求失败', '⚠️将在1秒后重试')
         await new Promise(resolve => setTimeout(resolve, 1000))
       }
       retryCound--
     }
-    toast('请求次数限制', {
-      description: '⚠️无法获取更多数据，可能已经全部加载了喔',
-    })
+    toastMsg('请求次数限制', '⚠️无法获取更多数据，可能已经全部加载了喔')
   }, [id])
 
   useEffect(() => {
@@ -37,9 +34,7 @@ const useShowData = () => {
         flag.current = false
       }
     } else {
-      toast('ID错误', {
-        description: '⚠️请检查ID是否正确',
-      })
+      toastMsg('ID错误', '⚠️请检查ID是否正确')
     }
   }, [requestShowData])
 

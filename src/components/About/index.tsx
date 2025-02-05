@@ -43,7 +43,7 @@ const AboutBody = memo(() => {
       >
         <AccordionTrigger>🏠 关于该项目</AccordionTrigger>
         <AccordionContent>
-          该项目是基于Pixiv的API进行开发的，旨在提供一个方便的工具来查看和下载Pixiv上的图片。
+          该项目的数据是基于Pixiv的API进行开发的，旨在提供一个方便的工具来查看和下载Pixiv上的图片。
         </AccordionContent>
       </AccordionItem>
 
@@ -53,7 +53,7 @@ const AboutBody = memo(() => {
         <AccordionContent>
           <div className='space-y-4'>
             <div>
-              项目基于Vite + React + TypeScript + TailwindCSS + aceternity/Shadcn/radix UI开发；
+              项目开发基于Vite + React + TypeScript + TailwindCSS + aceternity/Shadcn/radix UI开发；
               <PhotoList list={configDev} />
             </div>
             <div>

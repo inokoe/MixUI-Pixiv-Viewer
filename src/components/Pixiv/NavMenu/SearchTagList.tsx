@@ -16,17 +16,15 @@ import {
 } from '@/components/ui/navigation-menu'
 import DateRangePicker from './DateRangePicker'
 import { SearchModeOptions } from '@/config/PageLayoutHeaderData'
-import { toast } from 'sonner'
 import { RootState } from '@/store'
+import { toastMsg } from '@/utils/pixiv/Tools'
 
 export function SearchTagList() {
   const searchParams = useSelector((state: RootState) => state.pixiv.searchParams)
   const dispatch = useDispatch()
   const handleReset = () => {
     dispatch(setClearSearchParams())
-    toast('参数重置', {
-      description: '搜索参数已重置',
-    })
+    toastMsg('参数重置', '搜索参数已重置')
   }
   return (
     <NavigationMenu className='z-50 mb-2 w-full'>
@@ -87,9 +85,7 @@ const ListItem = React.forwardRef<React.ElementRef<'a'>, ListItemProps>(
     )
     const handleClick = () => {
       dispatch(setSearchParams(value))
-      toast(`${title}规则已更新`, {
-        description: `${label}`,
-      })
+      toastMsg(`${title}规则已更新`, `${label}`)
     }
     return (
       <li onClick={handleClick}>

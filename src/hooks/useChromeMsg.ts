@@ -1,24 +1,17 @@
-import { useEffect, useCallback } from 'react'
-import { toast } from 'sonner'
+import { toastMsg } from '@/utils/pixiv/Tools'
+import { useEffect } from 'react'
 
 const useChromeMsg = () => {
-  const checkBrowser = useCallback(() => {
+  useEffect(() => {
     // 判断是否是Chrome浏览器（包括移动版）
     const userAgent = navigator.userAgent.toLowerCase()
     const isChrome = userAgent.includes('chrome') || userAgent.includes('crios')
     if (!isChrome) {
-      toast('推荐Chrome浏览器', {
-        description: '以获得最佳的兼容性与性能⚡️',
-      })
+      toastMsg('推荐Chrome浏览器', '以获得最佳的兼容性与性能⚡️')
     }
-    return isChrome
-  }, [])
+  }, []) // 空依赖数组，确保只在组件挂载时执行一次
 
-  useEffect(() => {
-    checkBrowser()
-  }, [checkBrowser])
-
-  return { checkBrowser }
+  return {}
 }
 
 export default useChromeMsg

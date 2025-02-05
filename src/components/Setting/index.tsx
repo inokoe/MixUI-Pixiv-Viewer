@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import CheckSwitch from './CheckSwitch'
 import { RootState } from '@/store'
 import { setSetting, SettingKey } from '@/store/reducers/Setting'
+import { toastMsg } from '@/utils/pixiv/Tools'
 
 const SettingBody = () => {
   const dispatch = useDispatch()
@@ -17,6 +18,10 @@ const SettingBody = () => {
           disabled={key === 'developmentMode'}
           onChange={(checked: boolean) => {
             dispatch(setSetting({ [key]: { checked } }))
+            toastMsg(
+              `${settingConfig[key].label} => 已${checked ? '开启' : '关闭'}`,
+              settingConfig[key].description
+            )
           }}
         />
       ))}

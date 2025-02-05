@@ -6,11 +6,10 @@ import { MyNProgress } from '@/lib/utils'
 import store, { RootState } from '@/store'
 import { setSearchParams } from '@/store/reducers/pixiv'
 import { SearchParams } from '@/store/reducers/pixiv/types'
-import { deduplicateById, getRankDate } from '@/utils/pixiv/Tools'
+import { deduplicateById, getRankDate, toastMsg } from '@/utils/pixiv/Tools'
 import { useEffect, useState, useCallback, useRef, memo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { toast } from 'sonner'
 
 /**
  * 获取搜索结果，包含重试逻辑
@@ -29,15 +28,12 @@ const getSearchParams = async (params: SearchParams) => {
       return response
     }
 
-    toast('请求失败', {
-      description: '⚠️将在1秒后重试',
-    })
+    toastMsg('请求失败', '⚠️将在1秒后重试')
+
     maxRetry--
 
     if (maxRetry <= 0) {
-      toast('请求次数限制', {
-        description: '⚠️无法获取更多数据，可能已经全部加载了喔',
-      })
+      toastMsg('请求次数限制', '⚠️无法获取更多数据，可能已经全部加载了喔')
       break
     }
 

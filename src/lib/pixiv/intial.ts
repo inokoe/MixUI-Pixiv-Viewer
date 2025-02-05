@@ -1,10 +1,9 @@
 import getRank from '@/api/http/rank'
 import { PixivRankParams } from '@/api/http/base.types'
-import { getRankDate } from '@/utils/pixiv/Tools'
+import { getRankDate, toastMsg } from '@/utils/pixiv/Tools'
 import { concurrentRun } from '@/lib/utils'
 import { Dispatch } from 'redux'
 import { setRankInitial } from '@/store/reducers/pixiv'
-import { toast } from 'sonner'
 
 const initialList = [
   {
@@ -51,14 +50,10 @@ export const requestNewData = async (mode: PixivRankParams['mode'], date: string
     if ('illusts' in result.api && result.api.illusts.length > 0) {
       break
     }
-    toast('请求失败', {
-      description: '⚠️将在1秒后重试',
-    })
+    toastMsg('请求失败', '⚠️将在1秒后重试')
     maxRetry--
     if (maxRetry <= 0) {
-      toast('请求次数限制', {
-        description: '⚠️无法获取更多数据，可能已经全部加载了喔',
-      })
+      toastMsg('请求次数限制', '⚠️无法获取更多数据，可能已经全部加载了喔')
       break
     }
     await new Promise(resolve => setTimeout(resolve, 1000))

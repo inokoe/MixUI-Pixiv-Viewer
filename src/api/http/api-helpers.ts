@@ -1,7 +1,7 @@
 import { AxiosResponse, AxiosRequestConfig } from 'axios'
 import { PixivRankResponse, PixivRankErrorResponse, PixivShowResponse } from './base.types'
-import { toast } from 'sonner'
 import store from '@/store'
+import { toastMsg } from '@/utils/pixiv/Tools'
 
 export const createErrorResponse = (msg: string, description: string): PixivRankErrorResponse => ({
   api: {
@@ -62,9 +62,7 @@ export const showResponseMessage = (
   result: PixivRankResponse | PixivShowResponse | PixivRankErrorResponse
 ) => {
   if (result.msg) {
-    toast(result.msg, {
-      description: result.description,
-    })
+    toastMsg(result.msg, result.description)
   }
 }
 

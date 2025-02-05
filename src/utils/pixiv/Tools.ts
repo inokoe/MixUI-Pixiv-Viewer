@@ -3,6 +3,7 @@ import dayjsTz from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 import 'dayjs/locale/zh-cn'
 import { Illust } from '@/api/http/base.types'
+import { toast } from 'sonner'
 
 dayjs.extend(utc)
 dayjs.extend(dayjsTz)
@@ -51,4 +52,12 @@ export const getImageSrcLength = (data?: Illust) => {
     return data.meta_pages.length
   }
   return 1
+}
+
+export const toastMsg = (msg: string, description?: string) => {
+  if (msg) {
+    toast(msg, {
+      description,
+    })
+  }
 }
