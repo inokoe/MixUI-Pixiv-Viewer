@@ -10,7 +10,7 @@ export async function GET(request: Request) {
   }
 
   // 构建新的 URL
-  const url = `https://i.pixiv.re/${proxyPath}`
+  const url = `https://i.pximg.net/${proxyPath}`
 
   console.log(url)
 
