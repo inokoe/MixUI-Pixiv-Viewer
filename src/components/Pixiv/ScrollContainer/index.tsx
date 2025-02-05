@@ -125,7 +125,7 @@ const ScrollContainer = memo(({ mode, date }: ScrollContainerProps) => {
       <div
         ref={container}
         className={cn(
-          'flex gap-2 w-full h-96 overflow-x-scroll scrollbar-hide relative rounded-lg',
+          'flex gap-2 w-full h-72 sm:h-72 md:h-80 lg:h-80 xl:h-80 overflow-x-scroll scrollbar-hide relative rounded-lg',
           isDragging ? 'cursor-grabbing select-none' : 'cursor-grab'
         )}
         onMouseDown={handleMouseDown}
@@ -141,7 +141,7 @@ const ScrollContainer = memo(({ mode, date }: ScrollContainerProps) => {
           data.map(({ id, title, image_urls, user }, index) => (
             <div
               key={id}
-              className='min-h-80 w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/4 xl:w-1/5 rounded-lg flex-shrink-0'
+              className='h-full w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/4 xl:w-1/5 rounded-lg flex-shrink-0'
             >
               <ImageContainer
                 ImgSrc={image_urls.square_medium}
