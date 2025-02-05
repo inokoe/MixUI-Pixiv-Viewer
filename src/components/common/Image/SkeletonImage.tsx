@@ -65,6 +65,7 @@ interface ImageProps {
     large: string
     medium: string
   }
+  preload?: string
 }
 
 /**
@@ -85,6 +86,7 @@ const SkeletonImage = memo<ImageProps>(
     countIndex,
     countClassName,
     imgDownloadInfo,
+    preload,
   }) => {
     // 控制加载状态
     const [isLoading, setLoading] = useState<boolean>(false)
@@ -137,7 +139,14 @@ const SkeletonImage = memo<ImageProps>(
           })
         }
       }
-    }, [handleImageLoaded])
+    }, [isObserver])
+
+    useEffect(() => {
+      if (preload && isLoading) {
+        const preloadImg = new Image()
+        preloadImg.src = preload
+      }
+    }, [preload, isLoading])
 
     return (
       <div

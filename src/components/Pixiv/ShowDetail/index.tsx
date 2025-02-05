@@ -4,8 +4,9 @@ import { DataContext } from '@/pages/Pixiv/Show/context'
 import { useContext } from 'react'
 import { IconId, IconUser, IconEye, IconHeart, IconClockHour1, IconLink } from '@tabler/icons-react'
 import dayjs from 'dayjs'
+import { memo } from 'react'
 
-const PixivShowDetail = () => {
+const PixivShowDetail = memo(() => {
   const data = useContext(DataContext)
   return data ? (
     <div className='w-full h-full flex flex-col gap-2 p-4'>
@@ -56,6 +57,8 @@ const PixivShowDetail = () => {
   ) : (
     <Skeleton className='w-full h-full' />
   )
-}
+})
+
+PixivShowDetail.displayName = 'PixivShowDetail'
 
 export default PixivShowDetail

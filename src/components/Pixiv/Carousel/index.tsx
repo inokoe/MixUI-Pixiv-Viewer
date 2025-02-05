@@ -12,8 +12,9 @@ import { useCallback, useContext, useMemo } from 'react'
 import { DataContext } from '@/pages/Pixiv/Show/context'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store'
+import { memo } from 'react'
 
-const PixivCarousel = ({ className }: { className?: string }) => {
+const PixivCarousel = memo(({ className }: { className?: string }) => {
   const data = useContext(DataContext)
   const imageQuality = useSelector((state: RootState) => state.performance.imageLoadQuality.quality)
   const isQualityAutoSwitch = useSelector(
@@ -81,6 +82,7 @@ const PixivCarousel = ({ className }: { className?: string }) => {
                           countIndex={index}
                           imgDownloadInfo={item}
                           countClassName='top-3 right-3 animate-slide-down duration-500 ease-in-out'
+                          preload={index === imageSrc.length - 1 ? '' : imgSrc(imageSrc[index + 1])}
                         />
                       </CardContent>
                     </Card>
@@ -98,6 +100,8 @@ const PixivCarousel = ({ className }: { className?: string }) => {
       </Carousel>
     </div>
   )
-}
+})
+
+PixivCarousel.displayName = 'PixivCarousel'
 
 export default PixivCarousel
