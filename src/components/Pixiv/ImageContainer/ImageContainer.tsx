@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { setShowHistory } from '@/store/reducers/pixiv'
 import { cn } from '@/lib/utils'
 import { useNavigate } from 'react-router-dom'
+import { getImageSrcLength } from '@/utils/pixiv/Tools'
 
 interface ImageContainerProps {
   ImgSrc: string
@@ -57,7 +58,11 @@ const ImageContainer = memo(
           onMouseUp={handleMouseUp}
         >
           <div className='h-[100%] w-[100%] absolute left-0 top-0 z-40 bg-transparent hover:bg-gray-50/30 transition-all duration-300'></div>
-          <SkeletonImage src={ImgSrc} />
+          <SkeletonImage
+            src={ImgSrc}
+            countLength={getImageSrcLength(fullData)}
+            countIndex={0}
+          />
         </div>
         <div className='pt-1 pl-1 flex flex-col gap-1 justify-center'>
           <div className='text truncate w-full'>{Title || '无题'}</div>

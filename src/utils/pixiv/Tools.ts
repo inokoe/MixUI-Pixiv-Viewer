@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import dayjsTz from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 import 'dayjs/locale/zh-cn'
+import { Illust } from '@/api/http/base.types'
 
 dayjs.extend(utc)
 dayjs.extend(dayjsTz)
@@ -42,4 +43,12 @@ export const isEarlyMorning = () => {
 // 获取当前网站的域名，包括端口号等信息
 export const getCurrentDomain = () => {
   return `${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}`
+}
+
+export const getImageSrcLength = (data?: Illust) => {
+  if (!data) return 0
+  if (data.meta_pages && data.meta_pages.length > 0) {
+    return data.meta_pages.length
+  }
+  return 1
 }

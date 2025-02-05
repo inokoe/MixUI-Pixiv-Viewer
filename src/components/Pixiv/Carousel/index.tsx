@@ -71,12 +71,14 @@ const PixivCarousel = ({ className }: { className?: string }) => {
                 >
                   <div className='h-full w-full p-0'>
                     <Card className='h-full w-full rounded-none border-0'>
-                      <CardContent className='flex items-center justify-center p-0 h-full w-full'>
+                      <CardContent className='flex items-center justify-center p-0 h-full w-full bg-slate-100 dark:bg-zinc-800'>
                         <SkeletonImage
                           className='w-full h-full'
                           objectFit='contain'
                           src={imgSrc(item)}
                           isObserver={false}
+                          countLength={imageSrc.length}
+                          countIndex={index}
                         />
                       </CardContent>
                     </Card>

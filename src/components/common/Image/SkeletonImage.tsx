@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { setImageLoadInfo } from '@/store/reducers/performance'
 import Skeleton from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
+import ImageCounter from '../ImageCounter'
 
 /**
  * 创建全局共享的 IntersectionObserver
@@ -55,6 +56,9 @@ interface ImageProps {
   onClick?: () => void
   objectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down'
   isObserver?: boolean
+  countLength?: number
+  countIndex?: number
+  countClassName?: string
 }
 
 /**
@@ -63,7 +67,18 @@ interface ImageProps {
  * @returns React组件
  */
 const SkeletonImage = memo<ImageProps>(
-  ({ src, className, alt = 'image', style, onClick, objectFit = 'cover', isObserver = true }) => {
+  ({
+    src,
+    className,
+    alt = 'image',
+    style,
+    onClick,
+    objectFit = 'cover',
+    isObserver = true,
+    countLength,
+    countIndex,
+    countClassName,
+  }) => {
     // 控制加载状态
     const [isLoading, setLoading] = useState<boolean>(false)
     const containerRef = useRef<HTMLDivElement>(null)
@@ -122,7 +137,6 @@ const SkeletonImage = memo<ImageProps>(
       >
         {/* 加载时显示骨架屏 */}
         {!isLoading && <Skeleton className='h-full w-full' />}
-
         {/* 图片容器 */}
         <div className='h-full w-full overflow-hidden select-none'>
           <img
@@ -137,6 +151,13 @@ const SkeletonImage = memo<ImageProps>(
             )}
           />
         </div>
+        {countLength && countIndex !== undefined && (
+          <ImageCounter
+            index={countIndex || 0}
+            length={countLength}
+            className={countClassName || 'top-3 right-3'}
+          />
+        )}
       </div>
     )
   }
