@@ -5,12 +5,14 @@ import {
   AXIOS_DEFAULT_RETRIES,
   AXIOS_DEFAULT_RETRY_DELAY,
   AXIOS_DEFAULT_TIMEOUT,
+  DEV_MODE_DATA,
   MY_PROXY_API,
   PIXIV_HTTP_API_DOMAIN,
   SERVER_DOMAIN,
 } from './config'
 import store from '@/store'
 import { setApiLoadInfo } from '@/store/reducers/performance'
+import { Illust } from './http/base.types'
 
 // 扩展 Axios 类型
 declare module 'axios' {
@@ -68,6 +70,25 @@ request.interceptors.response.use(
     if (!response.data.vercel) {
       getLoadTime()
     }
+
+    const replaceDevModeData = (item: Illust) => {
+      item.title = 'DevMode'
+      item.image_urls = DEV_MODE_DATA.image_urls
+      item.user = DEV_MODE_DATA.user
+      item.meta_single_page = DEV_MODE_DATA.meta_single_page
+      item.meta_pages = DEV_MODE_DATA.meta_pages
+    }
+
+    const isDevModel = store.getState().setting.developmentMode.checked
+    if (isDevModel) {
+      const illusts = response.data.api.illusts
+      if (Array.isArray(illusts) && illusts.length > 0) {
+        illusts.forEach(replaceDevModeData)
+      } else if (illusts && illusts.id) {
+        replaceDevModeData(illusts)
+      }
+    }
+
     // 替换图片CDN地址
     const replaceImageCDN = () => {
       let responseData = JSON.stringify(response.data)
