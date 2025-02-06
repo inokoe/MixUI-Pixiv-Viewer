@@ -5,22 +5,14 @@ export const PIXIV_HTTP_API_DOMAIN = '/'
 // Scoure:https://pixiv.cat/ => https://i.pixiv.re | https://i.pixiv.cat
 // Cloudflare Worker 多域名分流，防止单域名并发限制
 
-// Cloudflare CNAME优选IP
+// Cloudflare CNAME优选IP，多域名分流
 const CLOUDFLARE_WORKER_DOMAIN = ['picdn.0002523.xyz', 'piicdn.0002523.xyz', 'piiicdn.0002523.xyz']
-
-// Vercel CDN
-const VERCEL_PROXY_API = [
-  'mui.cdn1.0002523.xyz/cdn',
-  'mui.cdn2.0002523.xyz/cdn',
-  'mui.cdn3.0002523.xyz/cdn',
-  'mui.cdn4.0002523.xyz/cdn',
-]
 
 // Vercel 部署代理
 const SERVER_DOMAIN = [`${getCurrentDomain()}/cdn`]
 
 // 策略一、白天使用cloudflare worker，夜晚使用vercel代理，节约Vercel流量
-// export const MY_PROXY_API = isEarlyMorning() ? CLOUDFLARE_WORKER_DOMAIN : VERCEL_PROXY_API
+// export const MY_PROXY_API = isEarlyMorning() ? CLOUDFLARE_WORKER_DOMAIN : SERVER_DOMAIN
 // 策略二、使用Vercel部署代理
 // export const MY_PROXY_API = SERVER_DOMAIN
 // 策略三、使用cloudflare worker

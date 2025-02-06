@@ -1,5 +1,6 @@
 import { memo, useCallback } from 'react'
 import { IconDownload } from '@tabler/icons-react'
+import { toast } from 'sonner'
 
 /**
  * 图片下载导航栏组件
@@ -49,6 +50,10 @@ const ImageNavBar = memo(
           window.URL.revokeObjectURL(blobUrl)
         } catch (error) {
           console.error('Download failed:', error)
+          const newWindow = window.open(url, '_blank')
+          if (newWindow) {
+            toast.info('已在新窗口打开原图，请手动保存图片')
+          }
         }
       },
       [imgDownloadInfo]

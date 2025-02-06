@@ -34,7 +34,7 @@ const PageLayoutHeaderData = [
   },
   {
     id: 4,
-    path: '#',
+    path: '/show',
     label: '查看',
     show: false,
   },

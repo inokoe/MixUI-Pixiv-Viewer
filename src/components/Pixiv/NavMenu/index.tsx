@@ -1,6 +1,6 @@
 import PageLayoutHeaderData from '@/config/PageLayoutHeaderData'
 import { cn } from '@/lib/utils'
-import { useState, useCallback, useMemo, memo } from 'react'
+import { useState, useCallback, useMemo, memo, useEffect } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import RankTagList from './RankTagList'
 import { buildFullPath } from '@/utils/pixiv/Tools'
@@ -11,9 +11,13 @@ const NavMenu = memo(() => {
   const location = useLocation()
   const params = useParams()
 
-  const NavSelected = useCallback(() => {
-    setImageViewer(prev => !prev)
-  }, [])
+  const ShowImageViewer = useCallback(() => {
+    if (params.id) {
+      setImageViewer(true)
+    } else {
+      setImageViewer(false)
+    }
+  }, [params.id, location.pathname])
 
   const isActiveRoute = useCallback(
     (path: string) => {
@@ -21,6 +25,10 @@ const NavMenu = memo(() => {
     },
     [location.pathname, params]
   )
+
+  useEffect(() => {
+    ShowImageViewer()
+  }, [location.pathname, params.id])
 
   const renderNavItems = useMemo(() => {
     return PageLayoutHeaderData.map((item, index) => {
@@ -52,15 +60,23 @@ const NavMenu = memo(() => {
         return (
           <div
             key={index}
-            className='flex-1 flex justify-center items-center rounded-2xl'
+            className={cn(
+              'flex-1 flex justify-center items-center rounded-2xl transition-all duration-300',
+              isActiveRoute(item.path) ? 'bg-gray-200 dark:bg-zinc-600 select-none' : ''
+            )}
           >
-            {item.label}
+            <Link
+              to={`${item.path}/${params.id}`}
+              className='w-full'
+            >
+              <div className='w-full text-center'>{item.label}</div>
+            </Link>
           </div>
         )
       }
       return null
     })
-  }, [])
+  }, [isActiveRoute])
 
   return (
     <div className='h-auto w-full lg:w-3/4 flex flex-col gap-1 justify-evenly'>
