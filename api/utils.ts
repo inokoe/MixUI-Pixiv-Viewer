@@ -13,6 +13,13 @@ export function getResponseImage(data: ArrayBuffer | Blob | string) {
   const response = new Response(data)
   response.headers.set('Content-Type', 'image/jpeg')
   response.headers.set('Access-Control-Allow-Origin', '*')
+  response.headers.set('Access-Control-Allow-Methods', 'GET')
+  response.headers.set(
+    'Access-Control-Allow-Headers',
+    'Content-Type, Authorization, X-Requested-With'
+  )
+  response.headers.set('Access-Control-Max-Age', '86400')
+  response.headers.set('Access-Control-Allow-Credentials', 'true')
   response.headers.set('Cache-Control', 'public, max-age=31536000')
   return response
 }

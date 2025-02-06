@@ -14,6 +14,7 @@ interface SettingState {
   safeMode: SettingItem
   developmentMode: SettingItem
   imageQualityAdaptation: SettingItem
+  imageViewerCDN: SettingItem
   _persist?: { version: number; rehydrated: boolean }
 }
 
@@ -32,6 +33,11 @@ const initialState: SettingState = {
     label: '图片质量自适应',
     description: '图片质量自适应，根据网络情况自动选择图片质量。',
     checked: true,
+  },
+  imageViewerCDN: {
+    label: 'CDN分流',
+    description: '默认使用CloudFlare多域名分流，开启则使用Vercel部署代理。',
+    checked: false,
   },
 }
 

@@ -1,4 +1,4 @@
-import { getCurrentDomain, isEarlyMorning } from '@/utils/pixiv/Tools'
+import { getCurrentDomain } from '@/utils/pixiv/Tools'
 
 export const PIXIV_HTTP_API_DOMAIN = '/'
 // Source: https://rainchan.win/projects/pximg => https://px.s.rainchan.win
@@ -6,10 +6,14 @@ export const PIXIV_HTTP_API_DOMAIN = '/'
 // Cloudflare Worker 多域名分流，防止单域名并发限制
 
 // Cloudflare CNAME优选IP，多域名分流
-const CLOUDFLARE_WORKER_DOMAIN = ['picdn.0002523.xyz', 'piicdn.0002523.xyz', 'piiicdn.0002523.xyz']
+export const CLOUDFLARE_WORKER_DOMAIN = [
+  'picdn.0002523.xyz',
+  'piicdn.0002523.xyz',
+  'piiicdn.0002523.xyz',
+]
 
 // Vercel 部署代理
-const SERVER_DOMAIN = [`${getCurrentDomain()}/cdn`]
+export const SERVER_DOMAIN = [`${getCurrentDomain()}/cdn`]
 
 // 策略一、白天使用cloudflare worker，夜晚使用vercel代理，节约Vercel流量
 // export const MY_PROXY_API = isEarlyMorning() ? CLOUDFLARE_WORKER_DOMAIN : SERVER_DOMAIN

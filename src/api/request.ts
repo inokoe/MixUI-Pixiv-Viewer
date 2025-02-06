@@ -7,6 +7,7 @@ import {
   AXIOS_DEFAULT_TIMEOUT,
   MY_PROXY_API,
   PIXIV_HTTP_API_DOMAIN,
+  SERVER_DOMAIN,
 } from './config'
 import store from '@/store'
 import { setApiLoadInfo } from '@/store/reducers/performance'
@@ -73,10 +74,12 @@ request.interceptors.response.use(
       // 替换图片CDN地址
       // 创建一个全局匹配的正则表达式
       const regex = /https:\/\/i\.pximg\.net/g
+      const settingConfig = store.getState().setting.imageViewerCDN.checked
+      const PROXY_API = settingConfig ? SERVER_DOMAIN : MY_PROXY_API
       responseData = responseData.replace(regex, () => {
-        const proxy = MY_PROXY_API[currentProxyIndex]
+        const proxy = PROXY_API[currentProxyIndex]
         currentProxyIndex = currentProxyIndex + 1
-        if (currentProxyIndex >= MY_PROXY_API.length) {
+        if (currentProxyIndex >= PROXY_API.length) {
           currentProxyIndex = 0
         }
         return `https://${proxy}`
