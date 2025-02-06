@@ -92,10 +92,10 @@ const PixivCarousel = memo(({ className }: { className?: string }) => {
             : null}
         </CarouselContent>
         <div className='absolute left-2 top-1/2 -translate-y-1/2 z-10'>
-          <CarouselPrevious className='relative left-0 translate-y-0' />
+          <CarouselPrevious className='relative left-0 translate-y-0 animate-slide-right animate-duration-300 ease-in-out' />
         </div>
         <div className='absolute right-2 top-1/2 -translate-y-1/2 z-10'>
-          <CarouselNext className='relative right-0 translate-y-0' />
+          <CarouselNext className='relative right-0 translate-y-0 animate-slide-left animate-duration-300 ease-in-out' />
         </div>
       </Carousel>
     </div>

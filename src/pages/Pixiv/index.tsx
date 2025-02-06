@@ -4,7 +4,6 @@ import PageLayoutHeader from '@/components/Pixiv/HeaderLayout/index'
 import { useDispatch } from 'react-redux'
 import { Outlet, useLocation } from 'react-router-dom'
 import { initalRankData } from '@/lib/pixiv/intial'
-import PageBodyFooter from '@/components/Pixiv/PageBodyFooter'
 import PageLayout from '../Layout/PageLayout'
 import { useNProgress } from '@/hooks/useNProgress'
 
