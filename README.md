@@ -14,6 +14,17 @@
 
 该项目接口依赖于 Vercel，因此，您可以通过 Vercel 快速部署您自己的服务
 
+![Vercel Config](./public/readme/VercelConfig.png)
+
+## 本地运行
+
+在本地运行 Vercel Server
+
+```bash
+npm install
+npm run serve
+```
+
 ## 特性
 
 ### 页面特性
