@@ -5,13 +5,10 @@ export const PIXIV_HTTP_API_DOMAIN = '/'
 // Scoure:https://pixiv.cat/ => https://i.pixiv.re | https://i.pixiv.cat
 // Cloudflare Worker 多域名分流，防止单域名并发限制
 
-const CLOUDFLARE_WORKER_DOMAIN = [
-  'pi.0002523.xyz',
-  'pii.0002523.xyz',
-  'piii.0002523.xyz',
-  'piiii.0002523.xyz',
-]
+// Cloudflare CNAME优选IP
+const CLOUDFLARE_WORKER_DOMAIN = ['picdn.0002523.xyz', 'piicdn.0002523.xyz', 'piiicdn.0002523.xyz']
 
+// Vercel CDN
 const VERCEL_PROXY_API = [
   'mui.cdn1.0002523.xyz/cdn',
   'mui.cdn2.0002523.xyz/cdn',
@@ -19,12 +16,15 @@ const VERCEL_PROXY_API = [
   'mui.cdn4.0002523.xyz/cdn',
 ]
 
+// Vercel 部署代理
 const SERVER_DOMAIN = [`${getCurrentDomain()}/cdn`]
 
-// 白天使用cloudflare worker，夜晚使用vercel代理，节约Vercel流量
-export const MY_PROXY_API = isEarlyMorning() ? CLOUDFLARE_WORKER_DOMAIN : VERCEL_PROXY_API
-// 使用Vercel部署代理
+// 策略一、白天使用cloudflare worker，夜晚使用vercel代理，节约Vercel流量
+// export const MY_PROXY_API = isEarlyMorning() ? CLOUDFLARE_WORKER_DOMAIN : VERCEL_PROXY_API
+// 策略二、使用Vercel部署代理
 // export const MY_PROXY_API = SERVER_DOMAIN
+// 策略三、使用cloudflare worker
+export const MY_PROXY_API = CLOUDFLARE_WORKER_DOMAIN
 
 export const PIXIV_IMAGE_PROXY_DOMAIN = MY_PROXY_API[0]
 export const AXIOS_DEFAULT_HEADERS = {
