@@ -86,7 +86,17 @@ const AboutBody = memo(() => {
                 rel='noopener noreferrer'
                 className='hover:underline'
               >
-                Pixiv Viewer : https://github.com/journey-ad/pixiv-viewer
+                ✨ Pixiv Viewer : https://github.com/journey-ad/pixiv-viewer
+              </a>
+            </div>
+            <div>
+              <a
+                href='https://github.com/journey-ad/pixiv-viewer'
+                target='_blank'
+                rel='noopener noreferrer'
+                className='hover:underline'
+              >
+                🪐 Pixiv Viewer : https://github.com/asadahimeka/pixiv-viewer
               </a>
             </div>
           </div>

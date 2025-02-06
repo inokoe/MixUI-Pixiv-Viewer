@@ -73,11 +73,12 @@ request.interceptors.response.use(
       let responseData = JSON.stringify(response.data)
       // 替换图片CDN地址
       // 创建一个全局匹配的正则表达式
-      const regex = /https:\/\/i\.pximg\.net/g
+      const regex = /https:\/\/[a-z]\.pximg\.net/g
       const settingConfig = store.getState().setting.imageViewerCDN.checked
       const PROXY_API = settingConfig ? SERVER_DOMAIN : MY_PROXY_API
+      currentProxyIndex = 0
       responseData = responseData.replace(regex, () => {
-        const proxy = PROXY_API[currentProxyIndex]
+        const proxy = PROXY_API[currentProxyIndex] || MY_PROXY_API[0]
         currentProxyIndex = currentProxyIndex + 1
         if (currentProxyIndex >= PROXY_API.length) {
           currentProxyIndex = 0
