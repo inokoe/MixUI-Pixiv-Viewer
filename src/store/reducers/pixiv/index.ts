@@ -74,11 +74,15 @@ const pixivSlice = createSlice({
       }
 
       newData.unshift(action.payload)
-
-      if (newData.length > state.showHistory.limit) {
+      console.log('newData.length', newData.length)
+      while (newData.length > state.showHistory.limit) {
         newData.pop()
       }
-      state.showHistory.data = newData
+      console.log('newData.length', newData.length, state.showHistory.limit)
+      state.showHistory = {
+        data: newData,
+        limit: initialState.showHistory.limit,
+      }
     },
   },
 })
