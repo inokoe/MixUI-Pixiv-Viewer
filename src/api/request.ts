@@ -15,7 +15,7 @@ import { setApiLoadInfo } from '@/store/reducers/performance'
 import { Illust } from './http/base.types'
 import { getCurrentDomain } from '@/utils/pixiv/Tools'
 import { setSetting } from '@/store/reducers/Setting'
-
+import { cloneDeep } from 'lodash'
 // 扩展 Axios 类型
 declare module 'axios' {
   export interface InternalAxiosRequestConfig {
@@ -74,18 +74,18 @@ request.interceptors.response.use(
     }
 
     const replaceDevModeData = (item: Illust) => {
-      item.title = 'DevMode'
-      item.image_urls = DEV_MODE_DATA.image_urls
-      item.user = DEV_MODE_DATA.user
-      item.meta_single_page = DEV_MODE_DATA.meta_single_page
-      item.meta_pages = DEV_MODE_DATA.meta_pages
-      item.tags = DEV_MODE_DATA.tags
+      const id = item.id
+      // 使用 Object.assign 来修改原对象
+      Object.assign(item, cloneDeep(DEV_MODE_DATA), {
+        id,
+        title: 'DevMode',
+      })
     }
 
-    const replaceDevModeDataFunc = (illusts: Illust) => {
-      if (Array.isArray(illusts) && illusts.length > 0) {
+    const replaceDevModeDataFunc = (illusts: Illust | Illust[]) => {
+      if (Array.isArray(illusts)) {
         illusts.forEach(replaceDevModeData)
-      } else if (illusts && illusts.id) {
+      } else if (illusts?.id) {
         replaceDevModeData(illusts)
       }
     }

@@ -3,7 +3,7 @@ import PageLayout from '../Layout/PageLayout'
 import PageBodyFooter from '@/components/Pixiv/PageBodyFooter'
 import PageBodyTitle from '@/components/Pixiv/PageBodyTitle'
 import H2Title from '@/components/common/Text/H2Title'
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 import Skeleton from '@/components/ui/skeleton'
 import { useSelector } from 'react-redux'
 import { RootReducer } from '@/store'
@@ -20,7 +20,14 @@ const NoMoreHistory = memo(() => {
 })
 
 const History = memo(() => {
-  const showHistory = useSelector((state: RootReducer) => state.pixiv.showHistory.data)
+  const rawData = useSelector((state: RootReducer) => state.pixiv.showHistory.data)
+  const isSafeMode = useSelector((state: RootReducer) => state.setting.safeMode.checked)
+
+  const filteredData = useMemo(() => {
+    if (!rawData) return null
+    return isSafeMode ? rawData.filter(item => item.title === 'DevMode') : rawData
+  }, [isSafeMode, rawData])
+
   useSidebarMenu(3)
   return (
     <PageLayout>
@@ -28,11 +35,11 @@ const History = memo(() => {
       <PageBodyTitle title={'最近50条记录'} />
 
       <div className='w-full flex-1 overflow-y-scroll overflow-x-hidden flex flex-col scrollbar-hide'>
-        {showHistory && showHistory.length > 0 ? (
+        {filteredData && filteredData.length > 0 ? (
           <WaterFlowContainer
             mode='search'
             date={getRankDate(1)}
-            propData={showHistory}
+            propData={filteredData}
           />
         ) : (
           <NoMoreHistory />

@@ -67,6 +67,8 @@ interface Illust {
   illust_ai_type: number
   illust_book_style: number
   restriction_attributes?: string[]
+  total_comments?: number
+  comment_access_control?: number
 }
 
 interface PixivRank {

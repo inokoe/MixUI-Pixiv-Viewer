@@ -7,6 +7,8 @@ import ImageStats from './ImageStats'
 import ImageTitle from './ImageTitle'
 import ImageAuthor from './ImageAuthor'
 import Skeleton from '@/components/ui/skeleton'
+import RichText from '@/components/common/RichText'
+import Divider from '@/components/common/Divider'
 
 const PixivShowDetail = memo(() => {
   const data = useContext(DataContext)
@@ -14,6 +16,16 @@ const PixivShowDetail = memo(() => {
     <div className='w-full h-full flex flex-col gap-2 p-4 animate-slide-up animate-duration-300 ease-in-out'>
       <ImageAuthor user={data.user} />
       <ImageTitle title={data.title} />
+      <Divider
+        variant='dotted'
+        thickness='medium'
+      />
+      {data.caption && (
+        <RichText
+          content={data.caption}
+          className='text-sm'
+        />
+      )}
       <ImageTagList tags={data.tags} />
       <ImageStats
         totalView={data.total_view}
@@ -21,7 +33,6 @@ const PixivShowDetail = memo(() => {
         createDate={data.create_date}
       />
       <ImagePixivLink id={data.id} />
-      {/* <hr className='w-full border-gray-500 dark:text-gray-400' /> */}
     </div>
   ) : (
     <Skeleton className='w-full h-full' />

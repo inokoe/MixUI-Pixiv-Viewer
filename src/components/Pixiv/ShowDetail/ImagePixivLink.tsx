@@ -1,21 +1,33 @@
+import { RootReducer } from '@/store'
 import { IconLink } from '@tabler/icons-react'
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
+import { useSelector } from 'react-redux'
 
 interface ImagePixivLinkProps {
   id: number
 }
 
+const SAFE_MODE_ID = '126073046'
+const BASE_URL = 'https://pixiv.net/artworks'
+
 const ImagePixivLink = memo(({ id }: ImagePixivLinkProps) => {
+  const isSafeMode = useSelector((state: RootReducer) => state.setting.safeMode.checked)
+
+  const pixivUrl = useMemo(() => {
+    const artworkId = isSafeMode ? SAFE_MODE_ID : id
+    return `${BASE_URL}/${artworkId}`
+  }, [isSafeMode, id])
+
   return (
     <div className='flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors'>
       <IconLink className='w-4 h-4' />
       <a
-        href={`https://pixiv.net/artworks/${id}`}
+        href={pixivUrl}
         target='_blank'
         rel='noreferrer'
         className='hover:underline truncate'
       >
-        {`https://pixiv.net/artworks/${id}`}
+        {pixivUrl}
       </a>
     </div>
   )
