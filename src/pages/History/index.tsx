@@ -21,12 +21,12 @@ const NoMoreHistory = memo(() => {
 
 const History = memo(() => {
   const rawData = useSelector((state: RootReducer) => state.pixiv.showHistory.data)
-  const isSafeMode = useSelector((state: RootReducer) => state.setting.safeMode.checked)
+  const isDevMode = useSelector((state: RootReducer) => state.setting.developmentMode.checked)
 
   const filteredData = useMemo(() => {
     if (!rawData) return null
-    return isSafeMode ? rawData.filter(item => item.title === 'DevMode') : rawData
-  }, [isSafeMode, rawData])
+    return isDevMode ? rawData.filter(item => item.title === 'DevMode') : rawData
+  }, [isDevMode, rawData])
 
   useSidebarMenu(3)
   return (
