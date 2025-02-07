@@ -13,6 +13,8 @@ import {
 import store from '@/store'
 import { setApiLoadInfo } from '@/store/reducers/performance'
 import { Illust } from './http/base.types'
+import { getCurrentDomain } from '@/utils/pixiv/Tools'
+import { setSetting } from '@/store/reducers/Setting'
 
 // 扩展 Axios 类型
 declare module 'axios' {
@@ -56,9 +58,9 @@ request.interceptors.request.use(config => {
 request.interceptors.response.use(
   response => {
     // 记录API请求的耗时性能数据到Redux
-    const getLoadTime = async () => {
+    const getLoadTime = () => {
       // 更新Redux
-      await store.dispatch(
+      store.dispatch(
         setApiLoadInfo({
           apiProxyLoadTimeList: response.data.apiTime,
           apiProxyStatusCodeList: response.data.api.status,
@@ -77,16 +79,30 @@ request.interceptors.response.use(
       item.user = DEV_MODE_DATA.user
       item.meta_single_page = DEV_MODE_DATA.meta_single_page
       item.meta_pages = DEV_MODE_DATA.meta_pages
+      item.tags = DEV_MODE_DATA.tags
     }
 
-    const isDevModel = store.getState().setting.developmentMode.checked
-    if (isDevModel) {
-      const illusts = response.data.api.illusts
+    const replaceDevModeDataFunc = (illusts: Illust) => {
       if (Array.isArray(illusts) && illusts.length > 0) {
         illusts.forEach(replaceDevModeData)
       } else if (illusts && illusts.id) {
         replaceDevModeData(illusts)
       }
+    }
+
+    const isDevModel = store.getState().setting.developmentMode.checked
+    const domain = getCurrentDomain().includes('mui-dev.nanoc.work')
+    if (!isDevModel && domain) {
+      store.dispatch(
+        setSetting({
+          developmentMode: {
+            checked: true,
+          },
+        })
+      )
+      replaceDevModeDataFunc(response.data.api.illusts)
+    } else if (isDevModel) {
+      replaceDevModeDataFunc(response.data.api.illusts)
     }
 
     // 替换图片CDN地址

@@ -74,11 +74,9 @@ const pixivSlice = createSlice({
       }
 
       newData.unshift(action.payload)
-      console.log('newData.length', newData.length)
       while (newData.length > state.showHistory.limit) {
         newData.pop()
       }
-      console.log('newData.length', newData.length, state.showHistory.limit)
       state.showHistory = {
         data: newData,
         limit: initialState.showHistory.limit,

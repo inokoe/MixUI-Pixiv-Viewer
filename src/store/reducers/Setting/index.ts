@@ -44,6 +44,7 @@ const initialState: SettingState = {
 export const persistConfig = {
   key: 'setting',
   storage,
+  whitelist: ['safeMode', 'imageQualityAdaptation', 'imageViewerCDN'],
 }
 
 const settingSlice = createSlice({
