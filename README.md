@@ -9,9 +9,12 @@
 ![Static Badge](https://img.shields.io/badge/tailwindcss-black?style=flat&logo=tailwindcss&logoColor=%23F7DF1E)
 ![Static Badge](https://img.shields.io/badge/vite-black?style=flat&logo=vite&logoColor=%23F7DF1E)
 
-![Static Badge](https://img.shields.io/badge/UI-aceternityui-black?style=flat&logoColor=%23F7DF1E)
+![Static Badge](https://img.shields.io/badge/aceternityui-black?style=flat&logo=shadcnui&logoColor=%23F7DF1E)
 ![Static Badge](https://img.shields.io/badge/shadcnui-black?style=flat&logo=shadcnui&logoColor=%23F7DF1E)
 ![Static Badge](https://img.shields.io/badge/radixui-black?style=flat&logo=radixui&logoColor=%23F7DF1E)
+
+![Static Badge](https://img.shields.io/badge/vercel-black?style=flat&logo=vercel&logoColor=%23F7DF1E)
+![Static Badge](https://img.shields.io/badge/cloudflare-black?style=flat&logo=cloudflare&logoColor=%23F7DF1E)
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/inokoe/MixUI-Pixiv-Viewer&demo-title=MuiPixivViewer)
 
