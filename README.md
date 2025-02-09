@@ -2,7 +2,16 @@
   
 # MixUi Pixiv Viewer
 
-基于 Pixiv Api 的 React、TS、TailwindCSS 项目，UI 部分使用了 Aceternity/Shadcn/radix UI.
+基于 Pixiv Api 数据驱动的的 React、TS、TailwindCSS 项目，混合了 Aceternity/Shadcn/radix UI.
+
+![Static Badge](https://img.shields.io/badge/react-black?style=flat&logo=react&logoColor=%23F7DF1E)
+![Static Badge](https://img.shields.io/badge/typescript-black?style=flat&logo=typescript&logoColor=%23F7DF1E)
+![Static Badge](https://img.shields.io/badge/tailwindcss-black?style=flat&logo=tailwindcss&logoColor=%23F7DF1E)
+![Static Badge](https://img.shields.io/badge/vite-black?style=flat&logo=vite&logoColor=%23F7DF1E)
+
+![Static Badge](https://img.shields.io/badge/UI-aceternityui-black?style=flat&logoColor=%23F7DF1E)
+![Static Badge](https://img.shields.io/badge/shadcnui-black?style=flat&logo=shadcnui&logoColor=%23F7DF1E)
+![Static Badge](https://img.shields.io/badge/radixui-black?style=flat&logo=radixui&logoColor=%23F7DF1E)
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/inokoe/MixUI-Pixiv-Viewer&demo-title=MuiPixivViewer)
 
