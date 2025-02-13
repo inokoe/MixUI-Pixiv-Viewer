@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState, useCallback, memo } from 'react'
-import { useDispatch } from 'react-redux'
-import { setImageLoadInfo } from '@/store/reducers/performance'
-import { cn, MyNProgress } from '@/lib/utils'
+import React, { useRef, memo, startTransition } from 'react'
+import { cn } from '@/lib/utils'
 import ImageCounter from '../ImageCounter'
 import ImageNavBar from '../ImageNavBar'
 import SkeletonLoading from '../Loading/SkeletonLoading'
+import usePreloadImage from '@/hooks/usePreloadImage'
+import useSkeletonImageLoad from '@/hooks/useSkeletonImageLoad'
 
 /**
  * 创建全局共享的 IntersectionObserver
@@ -18,29 +18,31 @@ const imageObserver = new IntersectionObserver(entries => {
       const src = img?.dataset.src
 
       if (img && src) {
-        const start = Date.now()
-        img.src = src
+        startTransition(() => {
+          const start = Date.now()
+          img.src = src
 
-        // 图片加载成功时的处理
-        img.onload = () => {
-          img.classList.remove('invisible')
-          img.classList.replace('opacity-0', 'opacity-1')
-          img.classList.replace('blur-sm', 'blur-0')
-          target.dispatchEvent(
-            new CustomEvent('imageLoaded', {
-              detail: { time: Date.now() - start, success: true },
-            })
-          )
-        }
+          // 图片加载成功时的处理
+          img.onload = () => {
+            img.classList.remove('invisible')
+            img.classList.replace('opacity-0', 'opacity-1')
+            img.classList.replace('blur-sm', 'blur-0')
+            target.dispatchEvent(
+              new CustomEvent('imageLoaded', {
+                detail: { time: Date.now() - start, success: true },
+              })
+            )
+          }
 
-        // 图片加载失败时的处理
-        img.onerror = () => {
-          target.dispatchEvent(
-            new CustomEvent('imageLoaded', {
-              detail: { time: Date.now() - start, success: false },
-            })
-          )
-        }
+          // 图片加载失败时的处理
+          img.onerror = () => {
+            target.dispatchEvent(
+              new CustomEvent('imageLoaded', {
+                detail: { time: Date.now() - start, success: false },
+              })
+            )
+          }
+        })
       }
       imageObserver.unobserve(entry.target)
     }
@@ -88,70 +90,25 @@ const SkeletonImage = memo<ImageProps>(
     imgDownloadInfo,
     preload,
   }) => {
-    // 控制加载状态
-    const [isLoading, setLoading] = useState<boolean>(false)
     const containerRef = useRef<HTMLDivElement>(null)
-    const dispatch = useDispatch()
 
-    // 处理图片加载完成事件
-    const handleImageLoaded = useCallback(
-      (e: CustomEvent) => {
-        setLoading(true)
-        // 只记录非base64图片的加载信息
-        if (!src.includes('base64')) {
-          dispatch(
-            setImageLoadInfo({
-              imageLoadTime: e.detail.time,
-              success: e.detail.success ? 1 : 0,
-              error: e.detail.success ? 0 : 1,
-            })
-          )
-        }
-      },
-      [src, dispatch]
-    )
+    const { isLoading } = useSkeletonImageLoad({
+      src,
+      isObserver,
+      containerRef,
+      imageObserver,
+    })
 
-    // 设置图片懒加载和加载事件监听
-    useEffect(() => {
-      const container = containerRef.current
-      if (!container) return
-      if (!isObserver) {
-        return
-      }
-
-      container.addEventListener('imageLoaded', handleImageLoaded as EventListener)
-      imageObserver.observe(container)
-
-      return () => {
-        container.removeEventListener('imageLoaded', handleImageLoaded as EventListener)
-        imageObserver.unobserve(container)
-      }
-    }, [handleImageLoaded])
-
-    useEffect(() => {
-      if (!isObserver) {
-        MyNProgress.start()
-        const img = containerRef.current?.querySelector('img')
-        if (img) {
-          img.addEventListener('load', () => {
-            setLoading(true)
-            MyNProgress.done()
-          })
-        }
-      }
-    }, [isObserver])
-
-    useEffect(() => {
-      if (preload && isLoading) {
-        const preloadImg = new Image()
-        preloadImg.src = preload
-      }
-    }, [preload, isLoading])
+    // 预加载图片
+    usePreloadImage(preload || '', isLoading)
 
     return (
       <div
         ref={containerRef}
-        className={cn('h-full w-full overflow-hidden hover:cursor-pointer relative', className)}
+        className={cn(
+          'h-full w-full overflow-hidden hover:cursor-pointer relative will-change-transform',
+          className
+        )}
         style={style}
       >
         {/* 加载时显示骨架屏 */}
