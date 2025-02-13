@@ -22,7 +22,7 @@ const initialState: SettingState = {
   developmentMode: {
     label: '开发模式',
     description: '开发模式下，会取消显示一些信息。',
-    checked: false,
+    checked: true,
   },
   safeMode: {
     label: '安全模式',

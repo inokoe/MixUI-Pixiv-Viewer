@@ -169,7 +169,7 @@ const SkeletonImage = memo<ImageProps>(
             alt={alt}
             onClick={onClick}
             className={cn(
-              'h-full w-full transition-all duration-500 ease-in-out',
+              'h-full w-full transition-all duration-700 ease-in-out',
               !isObserver ? 'opacity-1 blur-0 visible' : 'opacity-0 invisible blur-sm',
               `object-${objectFit}`
             )}
