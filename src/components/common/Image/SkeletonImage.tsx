@@ -18,30 +18,52 @@ const imageObserver = new IntersectionObserver(entries => {
       const src = img?.dataset.src
 
       if (img && src) {
+        const start = Date.now()
+
+        // 使用临时图片对象预加载
+        const tempImage = new Image()
+
+        // 设置 src
+        tempImage.src = src
+
+        // 静态判断路由是否在show页面
+        const pathname = window.location.pathname
+        const waitTime = pathname.startsWith('/show/') ? 0 : 0
+
+        // tempImage.onload = () => {
+        //   console.log('图片加载耗时:', Date.now() - start)
+        // }
+
+        // 使用 startTransition 包裹整个加载和过渡过程
         startTransition(() => {
-          const start = Date.now()
-          img.src = src
+          new Promise(resolve => setTimeout(resolve, waitTime))
+            .then(() => {
+              // const decodeStart = Date.now()
+              return tempImage.decode()
+              // .then(() => {
+              //   console.log('图片解码耗时:', Date.now() - decodeStart)
+              // })
+            })
+            .then(() => {
+              // 图片完全加载后，再设置到实际的 img 元素
+              img.src = src
+              img.classList.remove('invisible')
+              img.classList.replace('opacity-0', 'opacity-1')
+              img.classList.replace('blur-sm', 'blur-0')
 
-          // 图片加载成功时的处理
-          img.onload = () => {
-            img.classList.remove('invisible')
-            img.classList.replace('opacity-0', 'opacity-1')
-            img.classList.replace('blur-sm', 'blur-0')
-            target.dispatchEvent(
-              new CustomEvent('imageLoaded', {
-                detail: { time: Date.now() - start, success: true },
-              })
-            )
-          }
-
-          // 图片加载失败时的处理
-          img.onerror = () => {
-            target.dispatchEvent(
-              new CustomEvent('imageLoaded', {
-                detail: { time: Date.now() - start, success: false },
-              })
-            )
-          }
+              target.dispatchEvent(
+                new CustomEvent('imageLoaded', {
+                  detail: { time: Date.now() - start, success: true },
+                })
+              )
+            })
+            .catch(() => {
+              target.dispatchEvent(
+                new CustomEvent('imageLoaded', {
+                  detail: { time: Date.now() - start, success: false },
+                })
+              )
+            })
         })
       }
       imageObserver.unobserve(entry.target)

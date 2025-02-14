@@ -49,7 +49,7 @@ const useSkeletonImageLoad = ({
       container.removeEventListener('imageLoaded', handleImageLoaded as EventListener)
       imageObserver.unobserve(container)
     }
-  }, [handleImageLoaded, containerRef, imageObserver, isObserver])
+  }, [containerRef])
 
   // 处理非懒加载的情况
   useEffect(() => {
@@ -63,7 +63,7 @@ const useSkeletonImageLoad = ({
         })
       }
     }
-  }, [isObserver, containerRef])
+  }, [isObserver])
 
   return {
     isLoading,
