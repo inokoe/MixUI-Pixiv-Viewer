@@ -150,7 +150,13 @@ const SkeletonImage = memo<ImageProps>(
             className={cn(
               'h-full w-full transition-all duration-700 ease-in-out',
               !isObserver ? 'opacity-1 blur-0 visible' : 'opacity-0 invisible blur-sm',
-              `object-${objectFit}`
+              {
+                'object-contain': objectFit === 'contain',
+                'object-cover': objectFit === 'cover',
+                'object-fill': objectFit === 'fill',
+                'object-none': objectFit === 'none',
+                'object-scale-down': objectFit === 'scale-down',
+              }
             )}
           />
         </div>
