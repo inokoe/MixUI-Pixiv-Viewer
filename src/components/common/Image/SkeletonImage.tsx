@@ -50,11 +50,6 @@ const imageObserver = new IntersectionObserver(entries => {
         MyImage.onload = () => {
           new Promise(resolve => setTimeout(resolve, waitTime))
             .then(() => {
-              // 如果图片已经加载完成，则不进行解码
-              if (MyImage.complete && MyImage.naturalWidth > 0) {
-                return Promise.resolve()
-              }
-              // 如果图片未加载完成，则进行解码
               return MyImage.decode()
             })
             .then(() => {
