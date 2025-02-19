@@ -30,21 +30,21 @@ export const AXIOS_DEFAULT_HEADERS = {
 export const AXIOS_DEFAULT_TIMEOUT = 10000
 export const AXIOS_DEFAULT_RETRIES = 3
 export const AXIOS_DEFAULT_RETRY_DELAY = 1000
+export const DEV_DOMAIN = 'mui-dev.nanoc.work'
 
 export const DEV_MODE_DATA: Illust = {
-  id: 126073046,
-  title: 'りんご飴の工場',
+  id: 126483589,
+  title: 'ていねいな暮らし',
   type: 'illust',
   image_urls: {
     square_medium:
-      'https://i.pximg.net/c/360x360_70/img-master/img/2025/01/10/07/30/03/126073046_p0_square1200.jpg',
+      'https://i.pximg.net/c/360x360_70/img-master/img/2025/01/23/07/30/04/126483589_p0_square1200.jpg',
     medium:
-      'https://i.pximg.net/c/540x540_70/img-master/img/2025/01/10/07/30/03/126073046_p0_master1200.jpg',
+      'https://i.pximg.net/c/540x540_70/img-master/img/2025/01/23/07/30/04/126483589_p0_master1200.jpg',
     large:
-      'https://i.pximg.net/c/600x1200_90/img-master/img/2025/01/10/07/30/03/126073046_p0_master1200.jpg',
+      'https://i.pximg.net/c/600x1200_90/img-master/img/2025/01/23/07/30/04/126483589_p0_master1200.jpg',
   },
-  caption:
-    'りんご飴<br /><br />今見たら今年はクリスマス絵よりお正月絵のほうを多く描いていて驚きました。',
+  caption: 'ご飯などのスケッチ<br /><br />フライパンを出した日は丁寧な暮らしだと思います',
   restrict: 0,
   user: {
     id: 33333,
@@ -62,44 +62,57 @@ export const DEV_MODE_DATA: Illust = {
       translated_name: '原创',
     },
     {
-      name: 'Apple',
-      translated_name: null,
+      name: '飯テロ',
+      translated_name: 'food porn',
     },
     {
-      name: 'Яблоко',
+      name: 'なんとかのお茶',
       translated_name: null,
-    },
-    {
-      name: 'りんご飴',
-      translated_name: '苹果糖',
     },
     {
       name: '食べ物',
       translated_name: '食物',
     },
-    {
-      name: '工場見学',
-      translated_name: null,
-    },
   ],
   tools: [],
-  create_date: '2025-01-10T07:30:03+09:00',
-  page_count: 1,
-  width: 994,
-  height: 1403,
+  create_date: '2025-01-23T07:30:04+09:00',
+  page_count: 2,
+  width: 1095,
+  height: 1208,
   sanity_level: 2,
   x_restrict: 0,
   series: null,
-  meta_single_page: {
-    original_image_url: 'https://i.pximg.net/img-original/img/2025/01/10/07/30/03/126073046_p0.jpg',
-  },
-  meta_pages: [],
-  total_view: 68550,
-  total_bookmarks: 10395,
+  meta_single_page: {},
+  meta_pages: [
+    {
+      image_urls: {
+        square_medium:
+          'https://i.pximg.net/c/360x360_70/img-master/img/2025/01/23/07/30/04/126483589_p0_square1200.jpg',
+        medium:
+          'https://i.pximg.net/c/540x540_70/img-master/img/2025/01/23/07/30/04/126483589_p0_master1200.jpg',
+        large:
+          'https://i.pximg.net/c/600x1200_90/img-master/img/2025/01/23/07/30/04/126483589_p0_master1200.jpg',
+        original: 'https://i.pximg.net/img-original/img/2025/01/23/07/30/04/126483589_p0.jpg',
+      },
+    },
+    {
+      image_urls: {
+        square_medium:
+          'https://i.pximg.net/c/360x360_70/img-master/img/2025/01/23/07/30/04/126483589_p1_square1200.jpg',
+        medium:
+          'https://i.pximg.net/c/540x540_70/img-master/img/2025/01/23/07/30/04/126483589_p1_master1200.jpg',
+        large:
+          'https://i.pximg.net/c/600x1200_90/img-master/img/2025/01/23/07/30/04/126483589_p1_master1200.jpg',
+        original: 'https://i.pximg.net/img-original/img/2025/01/23/07/30/04/126483589_p1.jpg',
+      },
+    },
+  ],
+  total_view: 60163,
+  total_bookmarks: 6730,
   is_bookmarked: false,
   visible: true,
   is_muted: false,
-  total_comments: 32,
+  total_comments: 29,
   illust_ai_type: 1,
   illust_book_style: 0,
   comment_access_control: 0,

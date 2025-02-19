@@ -22,7 +22,9 @@ const useSkeletonImageLoad = ({
   // 处理图片加载完成事件
   const handleImageLoaded = useCallback(
     (e: CustomEvent) => {
-      setLoading(true)
+      if (e.detail.success) {
+        setLoading(true)
+      }
       // 只记录非base64图片的加载信息
       if (!src.includes('base64')) {
         dispatch(
@@ -33,8 +35,13 @@ const useSkeletonImageLoad = ({
           })
         )
       }
+      // 图片加载完成后立即移除事件监听器
+      const container = containerRef.current
+      if (container) {
+        container.removeEventListener('imageLoaded', handleImageLoaded as EventListener)
+      }
     },
-    [src, dispatch]
+    [src, dispatch, containerRef]
   )
 
   // 设置图片懒加载和加载事件监听

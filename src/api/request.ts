@@ -5,6 +5,7 @@ import {
   AXIOS_DEFAULT_RETRIES,
   AXIOS_DEFAULT_RETRY_DELAY,
   AXIOS_DEFAULT_TIMEOUT,
+  DEV_DOMAIN,
   DEV_MODE_DATA,
   MY_PROXY_API,
   PIXIV_HTTP_API_DOMAIN,
@@ -91,18 +92,20 @@ request.interceptors.response.use(
     }
 
     const isDevModel = store.getState().setting.developmentMode.checked
-    const domain = getCurrentDomain().includes('mui-dev.nanoc.work')
-    if (!isDevModel && domain) {
-      store.dispatch(
-        setSetting({
-          developmentMode: {
-            checked: true,
-          },
-        })
-      )
-      replaceDevModeDataFunc(response.data.api.illusts)
-    } else if (isDevModel) {
-      replaceDevModeDataFunc(response.data.api.illusts)
+    const domain = getCurrentDomain().includes(DEV_DOMAIN)
+    if (isDevModel || (!isDevModel && domain)) {
+      if (!isDevModel) {
+        store.dispatch(
+          setSetting({
+            developmentMode: {
+              checked: true,
+            },
+          })
+        )
+      }
+      if (response.data.api && response.data.api.illusts) {
+        replaceDevModeDataFunc(response.data.api.illusts)
+      }
     }
 
     // 替换图片CDN地址

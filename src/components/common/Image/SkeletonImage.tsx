@@ -1,4 +1,4 @@
-import React, { useRef, memo, startTransition } from 'react'
+import React, { useRef, memo } from 'react'
 import { cn } from '@/lib/utils'
 import ImageCounter from '../ImageCounter'
 import ImageNavBar from '../ImageNavBar'
@@ -19,52 +19,70 @@ const imageObserver = new IntersectionObserver(entries => {
 
       if (img && src) {
         const start = Date.now()
-
-        // 使用临时图片对象预加载
-        const tempImage = new Image()
-
-        // 设置 src
-        tempImage.src = src
+        const MyImage = new Image()
 
         // 静态判断路由是否在show页面
         const pathname = window.location.pathname
+        // 等待时间
         const waitTime = pathname.startsWith('/show/') ? 0 : 0
 
-        // tempImage.onload = () => {
-        //   console.log('图片加载耗时:', Date.now() - start)
-        // }
+        const cleanup = () => {
+          MyImage.onload = null
+          MyImage.onerror = null
+          img.onload = null
+          img.onerror = null
+        }
 
-        // 使用 startTransition 包裹整个加载和过渡过程
-        startTransition(() => {
+        const handleError = (flag: boolean) => {
+          requestIdleCallback(() => {
+            target.dispatchEvent(
+              new CustomEvent('imageLoaded', {
+                detail: {
+                  time: Date.now() - start,
+                  success: flag,
+                },
+              })
+            )
+          })
+          cleanup()
+        }
+
+        MyImage.onload = () => {
           new Promise(resolve => setTimeout(resolve, waitTime))
             .then(() => {
-              // const decodeStart = Date.now()
-              return tempImage.decode()
-              // .then(() => {
-              //   console.log('图片解码耗时:', Date.now() - decodeStart)
-              // })
+              // 如果图片已经加载完成，则不进行解码
+              if (MyImage.complete && MyImage.naturalWidth > 0) {
+                return Promise.resolve()
+              }
+              // 如果图片未加载完成，则进行解码
+              return MyImage.decode()
             })
             .then(() => {
-              // 图片完全加载后，再设置到实际的 img 元素
               img.src = src
-              img.classList.remove('invisible')
-              img.classList.replace('opacity-0', 'opacity-1')
-              img.classList.replace('blur-sm', 'blur-0')
-
-              target.dispatchEvent(
-                new CustomEvent('imageLoaded', {
-                  detail: { time: Date.now() - start, success: true },
-                })
-              )
+              // 使用 Promise 处理图片显示
+              return new Promise<void>((resolve, reject) => {
+                img.onload = () => {
+                  requestAnimationFrame(() => {
+                    img.classList.remove('invisible')
+                    img.classList.replace('opacity-0', 'opacity-1')
+                    img.classList.replace('blur-sm', 'blur-0')
+                    resolve()
+                  })
+                }
+                img.onerror = () => reject('显示失败')
+              })
+            })
+            .then(() => {
+              handleError(true)
             })
             .catch(() => {
-              target.dispatchEvent(
-                new CustomEvent('imageLoaded', {
-                  detail: { time: Date.now() - start, success: false },
-                })
-              )
+              handleError(false)
             })
-        })
+            .finally(cleanup)
+        }
+
+        MyImage.onerror = () => handleError(false)
+        MyImage.src = src
       }
       imageObserver.unobserve(entry.target)
     }
@@ -158,6 +176,7 @@ const SkeletonImage = memo<ImageProps>(
                 'object-scale-down': objectFit === 'scale-down',
               }
             )}
+            decoding='async'
           />
         </div>
         {countLength && countIndex !== undefined && (

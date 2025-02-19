@@ -2,25 +2,22 @@ import { startTransition, useEffect } from 'react'
 
 const usePreloadImage = (preload: string, isLoading: boolean) => {
   useEffect(() => {
+    if (!preload || !isLoading) return
+
     const preloadImg = new Image()
 
-    const preloadImage = async (preload: string) => {
-      preloadImg.src = preload
-      try {
-        // const start = Date.now()
-        await preloadImg.decode()
-        // const decodeTime = Date.now() - start
-        // console.log('图片预解码耗时:', decodeTime)
-      } catch (error) {
-        console.warn('图片预解码失败:', error)
+    const preloadImage = () => {
+      preloadImg.onload = () => {
+        preloadImg.decode().finally(() => {
+          preloadImg.onload = null
+        })
       }
+      preloadImg.src = preload
     }
 
-    if (preload && isLoading) {
-      startTransition(() => {
-        preloadImage(preload)
-      })
-    }
+    startTransition(() => {
+      preloadImage()
+    })
 
     return () => {
       preloadImg.src = ''
