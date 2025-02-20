@@ -1,4 +1,4 @@
-import React, { useRef, memo } from 'react'
+import React, { useRef, memo, startTransition } from 'react'
 import { cn } from '@/lib/utils'
 import ImageCounter from '../ImageCounter'
 import ImageNavBar from '../ImageNavBar'
@@ -34,7 +34,7 @@ const imageObserver = new IntersectionObserver(entries => {
         }
 
         const handleError = (flag: boolean) => {
-          requestIdleCallback(() => {
+          startTransition(() => {
             target.dispatchEvent(
               new CustomEvent('imageLoaded', {
                 detail: {

@@ -16,7 +16,7 @@ interface PageLayoutProps {
 const PageLayout = memo<PageLayoutProps>(({ children, className }) => {
   return (
     <div
-      className='flex h-screen flex-1 overflow-x-hidden'
+      className='flex h-screen w-full overflow-x-hidden'
       role='main'
     >
       <div

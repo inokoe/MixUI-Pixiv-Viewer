@@ -14,7 +14,12 @@ const PixivShowBody = memo(() => {
   }, [])
 
   return (
-    <div className='flex flex-col xl:flex-row w-full h-full rounded-lg gap-4 overflow-auto scrollbar-hide p-4'>
+    <div
+      className={cn(
+        'flex flex-col xl:flex-row w-full h-full rounded-lg gap-4 overflow-y-scroll overflow-x-hidden scrollbar-hide p-4',
+        isFullscreen && 'overflow-y-hidden flex-1 h-auto gap-0 pb-10 xl:pb-0'
+      )}
+    >
       <div
         className={cn(
           'w-full h-4/5 xl:h-full xl:w-2/3 flex-shrink-0 rounded-lg flex  justify-center items-center overflow-hidden bg-slate-100 dark:bg-zinc-800 backdrop-blur-sm transition-all duration-300 ease-in-out',
