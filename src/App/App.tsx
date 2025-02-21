@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Toaster />
-      <div className='h-[100vh] w-[100vw] bg-gray-100 dark:bg-neutral-800'>
+      <div className='h-[100dvh] w-screen overflow-hidden bg-gray-100 dark:bg-neutral-800'>
         <RouterProvider
           router={router}
           future={{

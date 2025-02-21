@@ -28,7 +28,7 @@ const Layout = memo<LayoutProps>(() => {
       className={cn(
         // 基础布局样式
         'flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800',
-        'w-screen flex-1 mx-auto h-screen',
+        'w-screen flex-1 h-full',
         // 边框和溢出控制
         'border border-neutral-200 dark:border-neutral-700',
         'overflow-hidden'
@@ -48,7 +48,7 @@ const Layout = memo<LayoutProps>(() => {
 
       {/* 主内容区域 */}
       <div
-        className='h-calc(100vh - 40px) md:h-screen flex-1 overflow-x-hidden animate-slide-up scrollbar-hide'
+        className='h-[calc(100%-40px)] md:h-full flex-1 overflow-x-hidden animate-slide-up scrollbar-hide'
         role='region'
         aria-label='Main content'
       >
