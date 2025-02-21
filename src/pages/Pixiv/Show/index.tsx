@@ -5,19 +5,22 @@ import { DataContext } from './context'
 import PixivShowDetail from '@/components/Pixiv/ShowDetail'
 import { memo, useCallback, useState } from 'react'
 import { cn } from '@/lib/utils'
+import { useDispatch } from 'react-redux'
+import { setIsHiddenSearchBar } from '@/store/reducers/ui'
 
 const PixivShowBody = memo(() => {
   const [isFullscreen, setIsFullscreen] = useState(false)
-
+  const dispatch = useDispatch()
   const toggleFullscreen = useCallback(() => {
     setIsFullscreen(prev => !prev)
-  }, [])
+    dispatch(setIsHiddenSearchBar())
+  }, [dispatch, isFullscreen])
 
   return (
     <div
       className={cn(
         'flex flex-col xl:flex-row w-full h-full rounded-lg gap-4 overflow-y-scroll overflow-x-hidden scrollbar-hide p-4',
-        isFullscreen && 'overflow-y-hidden flex-1 h-auto gap-0 pb-10 xl:pb-0'
+        isFullscreen && 'overflow-y-hidden flex-1 h-auto gap-0'
       )}
     >
       <div

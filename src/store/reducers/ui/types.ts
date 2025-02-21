@@ -3,4 +3,5 @@ export interface SystemState {
   ImageViewer: string
   ImageProtect: boolean
   SideBarMenuSelected: number
+  isHiddenSearchBar: boolean
 }

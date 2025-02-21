@@ -105,7 +105,10 @@ const PixivCarousel = memo(
           </div>
           <div className='absolute inset-0 pointer-events-none'>
             <FullScreenButton
-              className='absolute bottom-1 right-1 z-10 pointer-events-auto'
+              className={cn(
+                'absolute top-4 left-4 z-10 pointer-events-auto'
+                // 'md:bottom-10 md:left-10 md:top-auto'
+              )}
               toggleFullscreen={toggleFullscreen}
             />
           </div>

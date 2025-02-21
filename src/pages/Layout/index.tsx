@@ -48,7 +48,7 @@ const Layout = memo<LayoutProps>(() => {
 
       {/* 主内容区域 */}
       <div
-        className='h-screen flex-1 overflow-x-hidden animate-slide-up scrollbar-hide'
+        className='h-calc(100vh - 40px) md:h-screen flex-1 overflow-x-hidden animate-slide-up scrollbar-hide'
         role='region'
         aria-label='Main content'
       >

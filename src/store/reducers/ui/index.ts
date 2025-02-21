@@ -8,6 +8,7 @@ const initialState: SystemState = {
   ImageViewer: '',
   ImageProtect: false,
   SideBarMenuSelected: 0,
+  isHiddenSearchBar: false,
 }
 
 const uiPersistConfig = {
@@ -28,8 +29,19 @@ const systemSlice = createSlice({
     setSideBarMenuSelected(state, action: PayloadAction<number>) {
       state.SideBarMenuSelected = action.payload
     },
+    setIsHiddenSearchBar(state) {
+      state.isHiddenSearchBar = !state.isHiddenSearchBar
+    },
+    resetIsHiddenSearchBar(state) {
+      state.isHiddenSearchBar = false
+    },
   },
 })
 
-export const { setDarkModel, setSideBarMenuSelected } = systemSlice.actions
+export const {
+  setDarkModel,
+  setSideBarMenuSelected,
+  setIsHiddenSearchBar,
+  resetIsHiddenSearchBar,
+} = systemSlice.actions
 export default persistReducer(uiPersistConfig, systemSlice.reducer)

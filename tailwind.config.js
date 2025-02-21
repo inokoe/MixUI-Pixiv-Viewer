@@ -159,6 +159,14 @@ module.exports = {
             opacity: '1',
           },
         },
+        'opacity-up': {
+          '0%': {
+            opacity: '0',
+          },
+          '100%': {
+            opacity: '1',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -168,6 +176,7 @@ module.exports = {
         'slide-down': 'slide-down 0.5s ease-out forwards',
         'slide-right': 'slide-right 0.5s ease-out forwards',
         'slide-left': 'slide-left 0.5s ease-out forwards',
+        'opacity-up': 'opacity-up 0.5s ease-out forwards',
       },
     },
   },

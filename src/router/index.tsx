@@ -7,6 +7,7 @@ import PixivHome from '@/pages/Pixiv/Home'
 import PixivRank from '@/pages/Pixiv/Rank'
 import PixivSearch from '@/pages/Search'
 import PixivShow from '@/pages/Pixiv/Show'
+import { checkSearchBarLoader } from './Loader/CheckSearchBarLoader'
 
 /**
  * 路由配置
@@ -22,6 +23,8 @@ const routes: RouteObject[] = [
         path: '/',
         element: <Pixiv />,
         errorElement: <LoadingComponent msg='页面加载失败' />,
+        loader: checkSearchBarLoader,
+        shouldRevalidate: () => true,
         children: [
           {
             path: '/',
