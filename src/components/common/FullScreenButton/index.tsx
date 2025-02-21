@@ -16,7 +16,7 @@ const FullScreenButton = memo(
         className={cn(
           'absolute w-auto h-auto px-3 py-1.5 gap-2 rounded-lg bg-gray-900/50 backdrop-blur-sm flex items-center justify-center',
           className,
-          'animate-slide-up animate-duration-300 ease-in-out'
+          'animate-slide-right animate-duration-300 ease-in-out'
         )}
         onClick={handleToggleFullscreen}
       >
