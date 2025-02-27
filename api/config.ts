@@ -10,11 +10,11 @@ VIEWER PROJECT:
 https://github.com/journey-ad/pixiv-viewer
     > https://hibiapi.getloli.com
 https://github.com/asadahimeka/pixiv-viewer
-    > https://hibiapi.cocomi.eu.org/
+    > https://hibiapi.cocomi.eu.org
 */
-export const PROXY_DOMAIN = 'https://hibiapi.getloli.com'
+export const PROXY_DOMAIN = 'https://hibiapi.cocomi.eu.org'
 export const TIME_OUT = 10000
-export const DEV_MODE = false
+export const DEV_MODE = true
 export const FAKE_USER_AGENT = [
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
