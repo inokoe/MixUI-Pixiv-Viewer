@@ -68,8 +68,6 @@ npm run serve
 
 Request => Vercel => Original Server
 
-源站接口引用了 `https://github.com/asadahimeka/pixiv-viewer` 的接口，非常感谢
-
 #### 图片代理
 
 > 图片代理分为 Vercel 代理与 Cloudflare Worker 代理

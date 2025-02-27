@@ -12,7 +12,7 @@ https://github.com/journey-ad/pixiv-viewer
 https://github.com/asadahimeka/pixiv-viewer
     > https://hibiapi.cocomi.eu.org/
 */
-export const PROXY_DOMAIN = 'https://hibiapi.cocomi.eu.org'
+export const PROXY_DOMAIN = 'https://hibiapi.getloli.com'
 export const TIME_OUT = 10000
 export const DEV_MODE = false
 export const FAKE_USER_AGENT = [
