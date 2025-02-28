@@ -11,7 +11,7 @@ const PageLayoutHeader = React.memo(() => {
   return (
     <div
       className={cn(
-        'flex gap-2 justify-center items-center select-none origin-top flex-shrink-0',
+        'flex gap-2 justify-center items-center select-none origin-top flex-shrink-0 z-20',
         'transition-all duration-300 ease-in-out',
         'mt-5 md:mt-0',
         isHiddenSearchBar ? 'max-h-0 scale-y-0 opacity-0 mt-0' : 'max-h-36 scale-y-100 opacity-100'
