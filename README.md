@@ -84,27 +84,30 @@ Request => Vercel => Original Server
 ```js
 export default {
   async fetch(request) {
-    const url = new URL(request.url)
-    url.hostname = 'i.pximg.net'
+    const url = new URL(request.url);
+    url.hostname = 'i.pximg.net';
 
-    const proxyRequest = new Request(url, request)
-    proxyRequest.headers.set('Referer', 'https://www.pixiv.net/')
+    const proxyRequest = new Request(url, request);
+    proxyRequest.headers.set('Referer', 'https://www.pixiv.net/');
 
-    const response = await fetch(proxyRequest)
-    const newHeaders = new Headers(response.headers)
+    const response = await fetch(proxyRequest);
+    const newHeaders = new Headers(response.headers);
 
     // 添加 CORS 头
-    newHeaders.set('Access-Control-Allow-Origin', '*')
-    newHeaders.set('Access-Control-Allow-Methods', 'GET')
-    newHeaders.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+    newHeaders.set('Access-Control-Allow-Origin', '*');
+    newHeaders.set('Access-Control-Allow-Methods', 'GET');
+    newHeaders.set(
+      'Access-Control-Allow-Headers',
+      'Content-Type, Authorization'
+    );
 
     return new Response(response.body, {
       status: response.status,
       statusText: response.statusText,
       headers: newHeaders,
-    })
+    });
   },
-}
+};
 ```
 
 ## 参考

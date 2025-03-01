@@ -1,7 +1,7 @@
 export interface SystemState {
-  darkModel: boolean
-  ImageViewer: string
-  ImageProtect: boolean
-  SideBarMenuSelected: number
-  isHiddenSearchBar: boolean
+  darkModel: boolean;
+  ImageViewer: string;
+  ImageProtect: boolean;
+  SideBarMenuSelected: number;
+  isHiddenSearchBar: boolean;
 }

@@ -1,5 +1,5 @@
-import axios from 'axios'
-import axiosRetry from 'axios-retry'
+import axios from 'axios';
+import axiosRetry from 'axios-retry';
 import {
   AXIOS_DEFAULT_HEADERS,
   AXIOS_DEFAULT_RETRIES,
@@ -10,50 +10,50 @@ import {
   MY_PROXY_API,
   PIXIV_HTTP_API_DOMAIN,
   SERVER_DOMAIN,
-} from './config'
-import store from '@/store'
-import { setApiLoadInfo } from '@/store/reducers/performance'
-import { Illust } from './http/base.types'
-import { getCurrentDomain } from '@/utils/pixiv/Tools'
-import { setSetting } from '@/store/reducers/Setting'
-import { cloneDeep } from 'lodash'
+} from './config';
+import store from '@/store';
+import { setApiLoadInfo } from '@/store/reducers/performance';
+import { Illust } from './http/base.types';
+import { getCurrentDomain } from '@/utils/pixiv/Tools';
+import { setSetting } from '@/store/reducers/Setting';
+import { cloneDeep } from 'lodash';
 // 扩展 Axios 类型
 declare module 'axios' {
   export interface InternalAxiosRequestConfig {
     metadata: {
-      startTime: number
-    }
+      startTime: number;
+    };
   }
 }
 
 const request = axios.create({
   baseURL: PIXIV_HTTP_API_DOMAIN,
   timeout: AXIOS_DEFAULT_TIMEOUT,
-})
+});
 
 axiosRetry(request, {
   retries: AXIOS_DEFAULT_RETRIES,
   retryDelay: retryCount => {
-    return retryCount * AXIOS_DEFAULT_RETRY_DELAY
+    return retryCount * AXIOS_DEFAULT_RETRY_DELAY;
   },
   retryCondition: error => {
-    return error.message === 'TimeOut'
+    return error.message === 'TimeOut';
   },
-})
+});
 
-let currentProxyIndex = 0
+let currentProxyIndex = 0;
 
 // 请求拦截器
 request.interceptors.request.use(config => {
   if (config.headers) {
     Object.entries(AXIOS_DEFAULT_HEADERS).forEach(([key, value]) => {
-      config.headers?.set(key, value)
-    })
+      config.headers?.set(key, value);
+    });
   }
   // 记录开始时间
-  config.metadata = { startTime: Date.now() }
-  return config
-})
+  config.metadata = { startTime: Date.now() };
+  return config;
+});
 
 // 超时处理
 request.interceptors.response.use(
@@ -68,31 +68,31 @@ request.interceptors.response.use(
           serverStatusCodeList: response.status,
           serverLoadTimeList: Date.now() - response.config.metadata.startTime,
         })
-      )
-    }
+      );
+    };
     if (!response.data.vercel) {
-      getLoadTime()
+      getLoadTime();
     }
 
     const replaceDevModeData = (item: Illust) => {
-      const id = item.id
+      const id = item.id;
       // 使用 Object.assign 来修改原对象
       Object.assign(item, cloneDeep(DEV_MODE_DATA), {
         id,
         title: 'DevMode',
-      })
-    }
+      });
+    };
 
     const replaceDevModeDataFunc = (illusts: Illust | Illust[]) => {
       if (Array.isArray(illusts)) {
-        illusts.forEach(replaceDevModeData)
+        illusts.forEach(replaceDevModeData);
       } else if (illusts?.id) {
-        replaceDevModeData(illusts)
+        replaceDevModeData(illusts);
       }
-    }
+    };
 
-    const isDevModel = store.getState().setting.developmentMode.checked
-    const domain = getCurrentDomain().includes(DEV_DOMAIN)
+    const isDevModel = store.getState().setting.developmentMode.checked;
+    const domain = getCurrentDomain().includes(DEV_DOMAIN);
     if (isDevModel || (!isDevModel && domain)) {
       if (!isDevModel) {
         store.dispatch(
@@ -101,44 +101,47 @@ request.interceptors.response.use(
               checked: true,
             },
           })
-        )
+        );
       }
       if (response.data.api && response.data.api.illusts) {
-        replaceDevModeDataFunc(response.data.api.illusts)
+        replaceDevModeDataFunc(response.data.api.illusts);
       }
     }
 
     // 替换图片CDN地址
     const replaceImageCDN = () => {
-      let responseData = JSON.stringify(response.data)
+      let responseData = JSON.stringify(response.data);
       // 替换图片CDN地址
       // 创建一个全局匹配的正则表达式
-      const regex = /https:\/\/i\.pximg\.net/g
-      const settingConfig = store.getState().setting.imageViewerCDN.checked
-      const PROXY_API = settingConfig ? SERVER_DOMAIN : MY_PROXY_API
-      currentProxyIndex = 0
+      const regex = /https:\/\/i\.pximg\.net/g;
+      const settingConfig = store.getState().setting.imageViewerCDN.checked;
+      const PROXY_API = settingConfig ? SERVER_DOMAIN : MY_PROXY_API;
+      currentProxyIndex = 0;
       responseData = responseData.replace(regex, () => {
-        const proxy = PROXY_API[currentProxyIndex] || MY_PROXY_API[0]
-        currentProxyIndex = currentProxyIndex + 1
+        const proxy = PROXY_API[currentProxyIndex] || MY_PROXY_API[0];
+        currentProxyIndex = currentProxyIndex + 1;
         if (currentProxyIndex >= PROXY_API.length) {
-          currentProxyIndex = 0
+          currentProxyIndex = 0;
         }
-        return `https://${proxy}`
-      })
-      responseData = JSON.parse(responseData)
-      response.data = responseData
-    }
-    replaceImageCDN()
+        return `https://${proxy}`;
+      });
+      responseData = JSON.parse(responseData);
+      response.data = responseData;
+    };
+    replaceImageCDN();
 
-    return response
+    return response;
   },
   error => {
-    if (error.code === 'ECONNABORTED' && error.message.indexOf('timeout') !== -1) {
+    if (
+      error.code === 'ECONNABORTED' &&
+      error.message.indexOf('timeout') !== -1
+    ) {
       // 超时处理
-      return Promise.reject(new Error('TimeOut'))
+      return Promise.reject(new Error('TimeOut'));
     }
-    return Promise.reject(error)
+    return Promise.reject(error);
   }
-)
+);
 
-export default request
+export default request;

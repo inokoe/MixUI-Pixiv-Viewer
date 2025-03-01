@@ -1,10 +1,10 @@
-import { PixivRankParams } from '@/api/http/base.types'
-import WaterFlowContainer from '@/components/Pixiv/WaterFlowContainer'
-import { getRankDate } from '@/utils/pixiv/Tools'
-import { useParams } from 'react-router-dom'
+import { PixivRankParams } from '@/api/http/base.types';
+import WaterFlowContainer from '@/components/Pixiv/WaterFlowContainer';
+import { getRankDate } from '@/utils/pixiv/Tools';
+import { useParams } from 'react-router-dom';
 
 const PixivRank = () => {
-  const { mode } = useParams()
+  const { mode } = useParams();
   return (
     <>
       <WaterFlowContainer
@@ -12,7 +12,7 @@ const PixivRank = () => {
         date={getRankDate(1)}
       />
     </>
-  )
-}
+  );
+};
 
-export default PixivRank
+export default PixivRank;

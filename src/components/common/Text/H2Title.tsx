@@ -1,9 +1,9 @@
-import { cn } from '@/lib/utils'
-import { memo } from 'react'
+import { cn } from '@/lib/utils';
+import { memo } from 'react';
 
 interface H2TitleProps {
-  children: React.ReactNode
-  className?: string
+  children: React.ReactNode;
+  className?: string;
 }
 
 /**
@@ -21,9 +21,9 @@ const H2Title = memo<H2TitleProps>(({ children, className }) => {
     >
       {children}
     </h2>
-  )
-})
+  );
+});
 
-H2Title.displayName = 'H2Title'
+H2Title.displayName = 'H2Title';
 
-export default H2Title
+export default H2Title;

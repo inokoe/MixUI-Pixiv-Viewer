@@ -1,14 +1,14 @@
-import { Tabs } from '@/components/Performance/Body/Tags'
-import MyLineChart from '@/components/Performance/Charts/MyLineChart'
-import { ChartConfig } from '@/components/ui/chart'
-import { RootState } from '@/store'
-import { useDispatch, useSelector } from 'react-redux'
-import { createSelector } from '@reduxjs/toolkit'
-import PerformanceIp from '../Ip'
-import { useEffect, useMemo } from 'react'
-import getIp from '@/api/http/ip'
-import { setIpInfo } from '@/store/reducers/performance'
-import H1Title from '@/components/common/Text/H1Title'
+import { Tabs } from '@/components/Performance/Body/Tags';
+import MyLineChart from '@/components/Performance/Charts/MyLineChart';
+import { ChartConfig } from '@/components/ui/chart';
+import { RootState } from '@/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { createSelector } from '@reduxjs/toolkit';
+import PerformanceIp from '../Ip';
+import { useEffect, useMemo } from 'react';
+import getIp from '@/api/http/ip';
+import { setIpInfo } from '@/store/reducers/performance';
+import H1Title from '@/components/common/Text/H1Title';
 
 const selectImagePerformanceData = createSelector(
   (state: RootState) => state.performance.imageLoadInfo,
@@ -18,7 +18,8 @@ const selectImagePerformanceData = createSelector(
       UseTime: item,
       AvgTime: imageLoadInfo.imageLoadTimeAvg,
       SuccessRate: (
-        (imageLoadInfo.successCount / (imageLoadInfo.successCount + imageLoadInfo.errorCount)) *
+        (imageLoadInfo.successCount /
+          (imageLoadInfo.successCount + imageLoadInfo.errorCount)) *
         100
       ).toFixed(2),
     })),
@@ -37,7 +38,7 @@ const selectImagePerformanceData = createSelector(
       },
     } as ChartConfig,
   })
-)
+);
 
 const selectInterfacePerformanceData = createSelector(
   (state: RootState) => state.performance.apiLoadInfo,
@@ -73,26 +74,26 @@ const selectInterfacePerformanceData = createSelector(
       },
     } as ChartConfig,
   })
-)
+);
 
 const TabsContent = ({ children }: { children: React.ReactNode }) => {
-  return <div className='h-auto'>{children}</div>
-}
+  return <div className="h-auto">{children}</div>;
+};
 
 const PerformanceBody = () => {
-  const imageData = useSelector(selectImagePerformanceData)
-  const interfaceData = useSelector(selectInterfacePerformanceData)
-  const dispatch = useDispatch()
+  const imageData = useSelector(selectImagePerformanceData);
+  const interfaceData = useSelector(selectInterfacePerformanceData);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchIp = async () => {
-      const result = await getIp()
+      const result = await getIp();
       if (result) {
-        dispatch(setIpInfo(result))
+        dispatch(setIpInfo(result));
       }
-    }
-    fetchIp()
-  }, [dispatch])
+    };
+    fetchIp();
+  }, [dispatch]);
 
   const tabs = useMemo(
     () => [
@@ -102,7 +103,7 @@ const PerformanceBody = () => {
         content: (
           <TabsContent>
             <MyLineChart
-              className='h-96 w-full'
+              className="h-96 w-full"
               chartData={imageData.chartData}
               chartConfig={imageData.chartConfig}
               info={{
@@ -121,7 +122,7 @@ const PerformanceBody = () => {
         content: (
           <TabsContent>
             <MyLineChart
-              className='h-96 w-full'
+              className="h-96 w-full"
               chartData={interfaceData.chartData}
               chartConfig={interfaceData.chartConfig}
               info={{
@@ -139,20 +140,20 @@ const PerformanceBody = () => {
         value: 'ip',
         content: (
           <TabsContent>
-            <PerformanceIp className='h-[30rem] w-full' />
+            <PerformanceIp className="h-[30rem] w-full" />
           </TabsContent>
         ),
       },
     ],
     [imageData, interfaceData]
-  )
+  );
 
   return (
-    <div className='flex flex-col h-screen overflow-hidden'>
-      <H1Title title='性能监控' />
+    <div className="flex flex-col h-screen overflow-hidden">
+      <H1Title title="性能监控" />
       <Tabs tabs={tabs} />
     </div>
-  )
-}
+  );
+};
 
-export default PerformanceBody
+export default PerformanceBody;

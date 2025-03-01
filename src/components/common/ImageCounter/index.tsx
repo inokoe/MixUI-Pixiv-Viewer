@@ -1,8 +1,16 @@
-import { IconPhotoScan } from '@tabler/icons-react'
-import { memo } from 'react'
-import { cn } from '@/lib/utils'
+import { IconPhotoScan } from '@tabler/icons-react';
+import { memo } from 'react';
+import { cn } from '@/lib/utils';
 const ImageCounter = memo(
-  ({ index, length, className }: { index: number; length: number; className?: string }) => {
+  ({
+    index,
+    length,
+    className,
+  }: {
+    index: number;
+    length: number;
+    className?: string;
+  }) => {
     return (
       <div
         className={cn(
@@ -10,15 +18,15 @@ const ImageCounter = memo(
           className
         )}
       >
-        <IconPhotoScan className='w-4 h-4 text-gray-200' />
-        <p className='text-sm font-medium text-gray-200'>
+        <IconPhotoScan className="w-4 h-4 text-gray-200" />
+        <p className="text-sm font-medium text-gray-200">
           {length === 1 ? '1' : `${index + 1}/${length}`}
         </p>
       </div>
-    )
+    );
   }
-)
+);
 
-ImageCounter.displayName = 'ImageCounter'
+ImageCounter.displayName = 'ImageCounter';
 
-export default ImageCounter
+export default ImageCounter;

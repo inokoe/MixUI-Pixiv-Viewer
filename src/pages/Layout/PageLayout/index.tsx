@@ -1,11 +1,11 @@
-import { memo } from 'react'
-import { cn } from '@/lib/utils'
+import { memo } from 'react';
+import { cn } from '@/lib/utils';
 
 interface PageLayoutProps {
   /** 子元素 */
-  children: React.ReactNode
+  children: React.ReactNode;
   /** 自定义样式类名 */
-  className?: string
+  className?: string;
 }
 
 /**
@@ -15,10 +15,7 @@ interface PageLayoutProps {
  */
 const PageLayout = memo<PageLayoutProps>(({ children, className }) => {
   return (
-    <div
-      className='flex h-full w-full overflow-x-hidden'
-      role='main'
-    >
+    <div className="flex h-full w-full overflow-x-hidden" role="main">
       <div
         className={cn(
           // 基础样式
@@ -31,15 +28,15 @@ const PageLayout = memo<PageLayoutProps>(({ children, className }) => {
           // 自定义样式
           className
         )}
-        role='region'
-        aria-label='Page content'
+        role="region"
+        aria-label="Page content"
       >
         {children}
       </div>
     </div>
-  )
-})
+  );
+});
 
-PageLayout.displayName = 'PageLayout'
+PageLayout.displayName = 'PageLayout';
 
-export default PageLayout
+export default PageLayout;

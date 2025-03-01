@@ -1,20 +1,20 @@
-import PixivCarousel from '@/components/Pixiv/Carousel'
-import useShowData from '@/hooks/useShowData'
-import Skeleton from '@/components/ui/skeleton'
-import { DataContext } from './context'
-import PixivShowDetail from '@/components/Pixiv/ShowDetail'
-import { memo, useCallback, useState } from 'react'
-import { cn } from '@/lib/utils'
-import { useDispatch } from 'react-redux'
-import { setIsHiddenSearchBar } from '@/store/reducers/ui'
+import PixivCarousel from '@/components/Pixiv/Carousel';
+import useShowData from '@/hooks/useShowData';
+import Skeleton from '@/components/ui/skeleton';
+import { DataContext } from './context';
+import PixivShowDetail from '@/components/Pixiv/ShowDetail';
+import { memo, useCallback, useState } from 'react';
+import { cn } from '@/lib/utils';
+import { useDispatch } from 'react-redux';
+import { setIsHiddenSearchBar } from '@/store/reducers/ui';
 
 const PixivShowBody = memo(() => {
-  const [isFullscreen, setIsFullscreen] = useState(false)
-  const dispatch = useDispatch()
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const dispatch = useDispatch();
   const toggleFullscreen = useCallback(() => {
-    setIsFullscreen(prev => !prev)
-    dispatch(setIsHiddenSearchBar())
-  }, [dispatch, isFullscreen])
+    setIsFullscreen(prev => !prev);
+    dispatch(setIsHiddenSearchBar());
+  }, [dispatch, isFullscreen]);
 
   return (
     <div
@@ -40,22 +40,22 @@ const PixivShowBody = memo(() => {
         <PixivShowDetail />
       </div>
     </div>
-  )
-})
+  );
+});
 
-PixivShowBody.displayName = 'PixivShowBody'
+PixivShowBody.displayName = 'PixivShowBody';
 
 const PixivShow = memo(() => {
-  const data = useShowData()
+  const data = useShowData();
 
   return (
     <DataContext.Provider value={data}>
-      {!data && <Skeleton className='w-full h-full' />}
+      {!data && <Skeleton className="w-full h-full" />}
       {data && <PixivShowBody />}
     </DataContext.Provider>
-  )
-})
+  );
+});
 
-PixivShow.displayName = 'PixivShow'
+PixivShow.displayName = 'PixivShow';
 
-export default PixivShow
+export default PixivShow;

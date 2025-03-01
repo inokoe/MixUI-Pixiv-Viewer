@@ -1,14 +1,16 @@
 {
   "name": "mix-ui",
   "private": true,
-  "version": "0.4.3",
+  "version": "0.4.4",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "serve": "vercel dev"
+    "serve": "vercel dev",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.2",
@@ -63,6 +65,7 @@
     "eslint-plugin-react-refresh": "^0.4.14",
     "globals": "^15.11.0",
     "postcss": "^8.4.49",
+    "prettier": "^3.5.2",
     "tailwindcss": "^3.4.15",
     "terser": "^5.39.0",
     "typescript": "~5.6.2",

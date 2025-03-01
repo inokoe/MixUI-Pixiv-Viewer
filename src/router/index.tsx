@@ -1,13 +1,19 @@
-import { createBrowserRouter, RouteObject } from 'react-router-dom'
-import { Suspense } from 'react'
-import Layout from '@/pages/Layout'
-import { Performance, LoadingComponent, About, Setting, History } from './LazyLoad'
-import Pixiv from '@/pages/Pixiv'
-import PixivHome from '@/pages/Pixiv/Home'
-import PixivRank from '@/pages/Pixiv/Rank'
-import PixivSearch from '@/pages/Pixiv/Search'
-import PixivShow from '@/pages/Pixiv/Show'
-import { checkSearchBarLoader } from './Loader/CheckSearchBarLoader'
+import { createBrowserRouter, RouteObject } from 'react-router-dom';
+import { Suspense } from 'react';
+import Layout from '@/pages/Layout';
+import {
+  Performance,
+  LoadingComponent,
+  About,
+  Setting,
+  History,
+} from './LazyLoad';
+import Pixiv from '@/pages/Pixiv';
+import PixivHome from '@/pages/Pixiv/Home';
+import PixivRank from '@/pages/Pixiv/Rank';
+import PixivSearch from '@/pages/Pixiv/Search';
+import PixivShow from '@/pages/Pixiv/Show';
+import { checkSearchBarLoader } from './Loader/CheckSearchBarLoader';
 
 /**
  * 路由配置
@@ -17,12 +23,12 @@ const routes: RouteObject[] = [
   {
     path: '/',
     Component: Layout,
-    errorElement: <LoadingComponent msg='页面加载失败' />,
+    errorElement: <LoadingComponent msg="页面加载失败" />,
     children: [
       {
         path: '/',
         element: <Pixiv />,
-        errorElement: <LoadingComponent msg='页面加载失败' />,
+        errorElement: <LoadingComponent msg="页面加载失败" />,
         loader: checkSearchBarLoader,
         shouldRevalidate: () => true,
         children: [
@@ -51,7 +57,7 @@ const routes: RouteObject[] = [
             <Performance />
           </Suspense>
         ),
-        errorElement: <LoadingComponent msg='页面加载失败' />,
+        errorElement: <LoadingComponent msg="页面加载失败" />,
       },
       {
         path: '/about',
@@ -60,7 +66,7 @@ const routes: RouteObject[] = [
             <About />
           </Suspense>
         ),
-        errorElement: <LoadingComponent msg='页面加载失败' />,
+        errorElement: <LoadingComponent msg="页面加载失败" />,
       },
       {
         path: '/setting',
@@ -69,7 +75,7 @@ const routes: RouteObject[] = [
             <Setting />
           </Suspense>
         ),
-        errorElement: <LoadingComponent msg='页面加载失败' />,
+        errorElement: <LoadingComponent msg="页面加载失败" />,
       },
       {
         path: '/history',
@@ -78,11 +84,11 @@ const routes: RouteObject[] = [
             <History />
           </Suspense>
         ),
-        errorElement: <LoadingComponent msg='页面加载失败' />,
+        errorElement: <LoadingComponent msg="页面加载失败" />,
       },
     ],
   },
-]
+];
 
 /**
  * 创建路由实例
@@ -101,6 +107,6 @@ const router = createBrowserRouter(routes, {
     // 跳过动作错误重新验证
     v7_skipActionErrorRevalidation: true,
   },
-})
+});
 
-export default router
+export default router;

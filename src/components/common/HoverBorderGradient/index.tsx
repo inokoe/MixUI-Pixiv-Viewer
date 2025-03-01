@@ -1,18 +1,18 @@
-import { memo } from 'react'
-import { cn } from '@/lib/utils'
-import { HoverBorderGradient } from '@components/ui/hover-border-gradient'
+import { memo } from 'react';
+import { cn } from '@/lib/utils';
+import { HoverBorderGradient } from '@components/ui/hover-border-gradient';
 
 interface HoverBorderGradientButtonProps {
   /** 按钮图标 */
-  icon?: React.ReactNode
+  icon?: React.ReactNode;
   /** 按钮文本 */
-  text: string
+  text: string;
   /** 容器自定义样式 */
-  className?: string
+  className?: string;
   /** 按钮自定义样式 */
-  buttonClassName?: string
+  buttonClassName?: string;
   /** 点击事件处理函数 */
-  onClick?: () => void
+  onClick?: () => void;
 }
 
 /**
@@ -25,8 +25,8 @@ const HoverBorderGradientButton = memo<HoverBorderGradientButtonProps>(
     return (
       <div className={cn('flex justify-center text-center', className)}>
         <HoverBorderGradient
-          containerClassName='rounded-2xl'
-          as='button'
+          containerClassName="rounded-2xl"
+          as="button"
           className={cn(
             'dark:bg-black bg-white text-black dark:text-white',
             'flex items-center space-x-2 p-1',
@@ -36,14 +36,14 @@ const HoverBorderGradientButton = memo<HoverBorderGradientButtonProps>(
           )}
           onClick={onClick}
         >
-          {icon && <span className='flex items-center'>{icon}</span>}
-          <span className='text-sm font-medium'>{text}</span>
+          {icon && <span className="flex items-center">{icon}</span>}
+          <span className="text-sm font-medium">{text}</span>
         </HoverBorderGradient>
       </div>
-    )
+    );
   }
-)
+);
 
-HoverBorderGradientButton.displayName = 'HoverBorderGradientButton'
+HoverBorderGradientButton.displayName = 'HoverBorderGradientButton';
 
-export default HoverBorderGradientButton
+export default HoverBorderGradientButton;

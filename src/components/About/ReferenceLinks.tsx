@@ -1,8 +1,8 @@
-import { memo } from 'react'
+import { memo } from 'react';
 
 interface ReferenceLink {
-  url: string
-  text: string
+  url: string;
+  text: string;
 }
 
 const referenceLinks: ReferenceLink[] = [
@@ -18,27 +18,27 @@ const referenceLinks: ReferenceLink[] = [
     url: 'https://github.com/asadahimeka/pixiv-viewer',
     text: '🪐 Pixiv Viewer : https://github.com/asadahimeka/pixiv-viewer',
   },
-]
+];
 
 const ReferenceLinks = memo(() => {
   return (
-    <div className='space-y-2'>
+    <div className="space-y-2">
       {referenceLinks.map(link => (
         <div key={link.url}>
           <a
             href={link.url}
-            target='_blank'
-            rel='noopener noreferrer'
-            className='hover:underline'
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline"
           >
             {link.text}
           </a>
         </div>
       ))}
     </div>
-  )
-})
+  );
+});
 
-ReferenceLinks.displayName = 'ReferenceLinks'
+ReferenceLinks.displayName = 'ReferenceLinks';
 
-export default ReferenceLinks
+export default ReferenceLinks;

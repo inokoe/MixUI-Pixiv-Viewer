@@ -1,27 +1,27 @@
-import { MyNProgress } from '@/lib/utils'
-import { useEffect, useState } from 'react'
+import { MyNProgress } from '@/lib/utils';
+import { useEffect, useState } from 'react';
 
 const MiddleNProgress = (isLoading: boolean) => {
   useEffect(() => {
     if (isLoading) {
-      MyNProgress.start()
+      MyNProgress.start();
     } else {
-      MyNProgress.done()
+      MyNProgress.done();
     }
 
     return () => {
-      MyNProgress.done()
-    }
-  }, [isLoading])
-}
+      MyNProgress.done();
+    };
+  }, [isLoading]);
+};
 
 export const useNProgress = () => {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   // 自动处理进度条
-  MiddleNProgress(isLoading)
+  MiddleNProgress(isLoading);
 
   useEffect(() => {
-    setIsLoading(false)
-  }, [])
-}
+    setIsLoading(false);
+  }, []);
+};

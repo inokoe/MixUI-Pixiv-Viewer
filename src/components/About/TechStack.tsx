@@ -1,9 +1,9 @@
-import { memo } from 'react'
-import PhotoList from './PhotoList'
+import { memo } from 'react';
+import PhotoList from './PhotoList';
 
 interface TechStackSection {
-  description: string
-  images: string[]
+  description: string;
+  images: string[];
 }
 
 const techStacks: TechStackSection[] = [
@@ -24,11 +24,11 @@ const techStacks: TechStackSection[] = [
     description: '反向代理以及图片代理服务由Vercel、Cloudflare提供；',
     images: ['vercel.svg', 'cf.svg', 'cfworker.svg'],
   },
-]
+];
 
 const TechStack = memo(() => {
   return (
-    <div className='space-y-4'>
+    <div className="space-y-4">
       {techStacks.map((stack, index) => (
         <div key={index}>
           {stack.description}
@@ -36,9 +36,9 @@ const TechStack = memo(() => {
         </div>
       ))}
     </div>
-  )
-})
+  );
+});
 
-TechStack.displayName = 'TechStack'
+TechStack.displayName = 'TechStack';
 
-export default TechStack
+export default TechStack;

@@ -1,13 +1,13 @@
-import './App.css'
-import { RouterProvider } from 'react-router-dom'
-import router from '@/router'
-import { Toaster } from '@/components/ui/sonner'
+import './App.css';
+import { RouterProvider } from 'react-router-dom';
+import router from '@/router';
+import { Toaster } from '@/components/ui/sonner';
 
 function App() {
   return (
     <>
       <Toaster />
-      <div className='h-[100dvh] w-screen overflow-hidden bg-gray-100 dark:bg-neutral-800'>
+      <div className="h-[100dvh] w-screen overflow-hidden bg-gray-100 dark:bg-neutral-800">
         <RouterProvider
           router={router}
           future={{
@@ -16,7 +16,7 @@ function App() {
         />
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

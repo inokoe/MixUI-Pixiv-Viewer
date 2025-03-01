@@ -1,18 +1,18 @@
-import { getResponseImage } from '../utils.js'
+import { getResponseImage } from '../utils.js';
 
 export async function GET(request: Request) {
   // 从 URL 中获取目标图片地址
-  const urlInfo = new URL(request.url)
-  const proxyPath = urlInfo.pathname.replace('/cdn/', '')
+  const urlInfo = new URL(request.url);
+  const proxyPath = urlInfo.pathname.replace('/cdn/', '');
 
   if (!proxyPath) {
-    return new Response('Missing url parameter', { status: 400 })
+    return new Response('Missing url parameter', { status: 400 });
   }
 
   // 构建新的 URL
-  const url = `https://i.pximg.net/${proxyPath}`
+  const url = `https://i.pximg.net/${proxyPath}`;
 
-  console.log(url)
+  console.log(url);
 
   // 发起请求获取图片
   const response = await fetch(url, {
@@ -21,9 +21,9 @@ export async function GET(request: Request) {
       'User-Agent':
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     },
-  })
+  });
 
-  const body = await response.blob()
+  const body = await response.blob();
 
-  return getResponseImage(body)
+  return getResponseImage(body);
 }

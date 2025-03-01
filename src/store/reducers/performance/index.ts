@@ -1,8 +1,13 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { QualityLevel, PerformanceState, ImageLoadPayload, ApiLoadPayload } from './types'
-import { IpResponse } from '@/api/http/ip/types'
-import storage from 'redux-persist/es/storage'
-import { persistReducer } from 'redux-persist'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  QualityLevel,
+  PerformanceState,
+  ImageLoadPayload,
+  ApiLoadPayload,
+} from './types';
+import { IpResponse } from '@/api/http/ip/types';
+import storage from 'redux-persist/es/storage';
+import { persistReducer } from 'redux-persist';
 
 /**
  * 性能监控的初始状态
@@ -31,7 +36,7 @@ const initialState: PerformanceState = {
   ipInfo: {
     vercel: {},
   },
-}
+};
 
 /**
  * Redux Persist 配置
@@ -41,7 +46,7 @@ const performancePersistConfig = {
   key: 'performance',
   storage,
   whitelist: ['imageLoadInfo', 'apiLoadInfo', 'imageLoadQuality'],
-}
+};
 
 /**
  * 根据平均加载时间更新图片质量等级
@@ -49,10 +54,10 @@ const performancePersistConfig = {
  * @returns 质量等级
  */
 const updateQualityByAvgTime = (avgTime: number): QualityLevel => {
-  if (avgTime > 1500) return 'low'
-  if (avgTime > 1000) return 'mid'
-  return 'high'
-}
+  if (avgTime > 1500) return 'low';
+  if (avgTime > 1000) return 'mid';
+  return 'high';
+};
 
 /**
  * 性能监控的 Redux Slice
@@ -67,28 +72,30 @@ const performanceSlice = createSlice({
      * 并根据平均加载时间自动调整图片质量
      */
     setImageLoadInfo(state, action: PayloadAction<ImageLoadPayload>) {
-      const { imageLoadTime, success, error } = action.payload
-      const currentTime = Date.now()
-      const { imageLoadTimeList, listLimit } = state.imageLoadInfo
+      const { imageLoadTime, success, error } = action.payload;
+      const currentTime = Date.now();
+      const { imageLoadTimeList, listLimit } = state.imageLoadInfo;
 
       // 更新图片加载时间列表
-      imageLoadTimeList.push(imageLoadTime)
+      imageLoadTimeList.push(imageLoadTime);
       if (imageLoadTimeList.length > listLimit) {
-        imageLoadTimeList.shift()
+        imageLoadTimeList.shift();
       }
 
       // 计算平均加载时间
       const imageLoadTimeAvg = Math.ceil(
-        imageLoadTimeList.reduce((sum, time) => sum + time, 0) / imageLoadTimeList.length
-      )
+        imageLoadTimeList.reduce((sum, time) => sum + time, 0) /
+          imageLoadTimeList.length
+      );
 
       // 节流控制：每1秒最多执行一次quality更新，且需要至少10条数据
       if (
         currentTime - state.imageLoadInfo.lastUpdateTime >= 1000 &&
         imageLoadTimeList.length >= 10
       ) {
-        state.imageLoadQuality.quality = updateQualityByAvgTime(imageLoadTimeAvg)
-        state.imageLoadInfo.lastUpdateTime = currentTime
+        state.imageLoadQuality.quality =
+          updateQualityByAvgTime(imageLoadTimeAvg);
+        state.imageLoadInfo.lastUpdateTime = currentTime;
       }
 
       // 更新状态
@@ -98,7 +105,7 @@ const performanceSlice = createSlice({
         errorCount: state.imageLoadInfo.errorCount + error,
         imageLoadTimeAvg,
         imageLoadTimeList,
-      }
+      };
     },
 
     /**
@@ -109,16 +116,16 @@ const performanceSlice = createSlice({
       state.imageLoadInfo = {
         ...initialState.imageLoadInfo,
         lastUpdateTime: state.imageLoadInfo.lastUpdateTime,
-      }
-      state.apiLoadInfo = initialState.apiLoadInfo
-      state.imageLoadQuality.quality = 'high'
+      };
+      state.apiLoadInfo = initialState.apiLoadInfo;
+      state.imageLoadQuality.quality = 'high';
     },
 
     /**
      * 手动设置图片质量等级
      */
     setImageQuality(state, action: PayloadAction<QualityLevel>) {
-      state.imageLoadQuality.quality = action.payload
+      state.imageLoadQuality.quality = action.payload;
     },
 
     /**
@@ -131,38 +138,40 @@ const performanceSlice = createSlice({
         apiProxyStatusCodeList: newProxyStatus,
         serverStatusCodeList: newServerStatus,
         serverLoadTimeList: newServerTime,
-      } = action.payload
-      const { listLimit } = state.imageLoadInfo
+      } = action.payload;
+      const { listLimit } = state.imageLoadInfo;
 
       // 更新API代理加载时间
       const apiProxyLoadTimeList = [
         ...state.apiLoadInfo.apiProxyLoadTimeList.slice(-(listLimit - 1)),
         newProxyTime,
-      ]
+      ];
       const apiProxyLoadTimeAvg = Math.ceil(
-        apiProxyLoadTimeList.reduce((sum, time) => sum + time, 0) / apiProxyLoadTimeList.length
-      )
+        apiProxyLoadTimeList.reduce((sum, time) => sum + time, 0) /
+          apiProxyLoadTimeList.length
+      );
 
       // 更新API代理状态码
       const apiProxyStatusCodeList = [
         ...state.apiLoadInfo.apiProxyStatusCodeList.slice(-(listLimit - 1)),
         newProxyStatus,
-      ]
+      ];
 
       // 更新服务器加载时间
       const serverLoadTimeList = [
         ...state.apiLoadInfo.serverLoadTimeList.slice(-(listLimit - 1)),
         newServerTime,
-      ]
+      ];
       const serverLoadTimeAvg = Math.ceil(
-        serverLoadTimeList.reduce((sum, time) => sum + time, 0) / serverLoadTimeList.length
-      )
+        serverLoadTimeList.reduce((sum, time) => sum + time, 0) /
+          serverLoadTimeList.length
+      );
 
       // 更新服务器状态码
       const serverStatusCodeList = [
         ...state.apiLoadInfo.serverStatusCodeList.slice(-(listLimit - 1)),
         newServerStatus,
-      ]
+      ];
 
       // 更新状态
       state.apiLoadInfo = {
@@ -173,17 +182,17 @@ const performanceSlice = createSlice({
         serverStatusCodeList,
         serverLoadTimeList,
         serverLoadTimeAvg,
-      }
+      };
     },
 
     /**
      * 更新IP信息
      */
     setIpInfo(state, action: PayloadAction<IpResponse>) {
-      state.ipInfo = action.payload
+      state.ipInfo = action.payload;
     },
   },
-})
+});
 
 export const {
   setImageLoadInfo,
@@ -191,6 +200,9 @@ export const {
   setImageQuality,
   setApiLoadInfo,
   setIpInfo,
-} = performanceSlice.actions
+} = performanceSlice.actions;
 
-export default persistReducer(performancePersistConfig, performanceSlice.reducer)
+export default persistReducer(
+  performancePersistConfig,
+  performanceSlice.reducer
+);

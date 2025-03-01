@@ -1,19 +1,19 @@
-import { configureStore } from '@reduxjs/toolkit'
-import UIReducer from '@/store/reducers/ui'
-import PerformanceReducer from '@/store/reducers/performance'
-import PixivReducer from '@/store/reducers/pixiv'
-import SettingReducer from '@/store/reducers/Setting'
-import { persistStore } from 'redux-persist'
+import { configureStore } from '@reduxjs/toolkit';
+import UIReducer from '@/store/reducers/ui';
+import PerformanceReducer from '@/store/reducers/performance';
+import PixivReducer from '@/store/reducers/pixiv';
+import SettingReducer from '@/store/reducers/Setting';
+import { persistStore } from 'redux-persist';
 
 /**
  * Redux Store 的根 Reducer 类型
  */
 export type RootReducer = {
-  ui: ReturnType<typeof UIReducer>
-  performance: ReturnType<typeof PerformanceReducer>
-  pixiv: ReturnType<typeof PixivReducer>
-  setting: ReturnType<typeof SettingReducer>
-}
+  ui: ReturnType<typeof UIReducer>;
+  performance: ReturnType<typeof PerformanceReducer>;
+  pixiv: ReturnType<typeof PixivReducer>;
+  setting: ReturnType<typeof SettingReducer>;
+};
 
 /**
  * 创建 Redux Store
@@ -43,20 +43,20 @@ const createStore = () => {
       trace: true,
       traceLimit: 25,
     },
-  })
+  });
 
-  return store
-}
+  return store;
+};
 
 // 创建 store 实例
-const store = createStore()
+const store = createStore();
 
 // 创建持久化 store
-export const persistor = persistStore(store)
+export const persistor = persistStore(store);
 
 // 导出 RootState 类型
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>;
 // 导出 AppDispatch 类型
-export type AppDispatch = typeof store.dispatch
+export type AppDispatch = typeof store.dispatch;
 
-export default store
+export default store;

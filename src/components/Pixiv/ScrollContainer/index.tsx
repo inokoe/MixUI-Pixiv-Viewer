@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState, useCallback } from 'react'
-import { cn } from '@/lib/utils'
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react'
-import MyArrow from '@/components/common/Arrow'
-import ImageContainer from '../ImageContainer/ImageContainer'
-import Skeleton from '@/components/ui/skeleton'
-import { memo } from 'react'
-import { useRankData } from '@/hooks/useRankData'
-import { PixivRankParams } from '@/api/http/base.types'
+import { useEffect, useRef, useState, useCallback } from 'react';
+import { cn } from '@/lib/utils';
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
+import MyArrow from '@/components/common/Arrow';
+import ImageContainer from '../ImageContainer/ImageContainer';
+import Skeleton from '@/components/ui/skeleton';
+import { memo } from 'react';
+import { useRankData } from '@/hooks/useRankData';
+import { PixivRankParams } from '@/api/http/base.types';
 
 /**
  * ScrollContainer 组件的属性接口
@@ -14,7 +14,7 @@ import { PixivRankParams } from '@/api/http/base.types'
  */
 interface ScrollContainerProps extends Pick<PixivRankParams, 'mode'> {
   /** 日期字符串，用于获取特定日期的排行榜数据 */
-  date: string
+  date: string;
 }
 
 /**
@@ -23,71 +23,73 @@ interface ScrollContainerProps extends Pick<PixivRankParams, 'mode'> {
  */
 const ScrollContainer = memo(({ mode, date }: ScrollContainerProps) => {
   // 容器和拖拽相关的 ref
-  const container = useRef<HTMLDivElement>(null)
-  const dragStart = useRef(0)
-  const scrollStart = useRef(0)
+  const container = useRef<HTMLDivElement>(null);
+  const dragStart = useRef(0);
+  const scrollStart = useRef(0);
 
   // 组件状态
-  const [init, setInit] = useState(false) // 初始化状态
-  const [isDragging, setIsDragging] = useState(false) // 是否正在拖拽
-  const [showArrows, setShowArrows] = useState({ left: false, right: true }) // 箭头显示状态
+  const [init, setInit] = useState(false); // 初始化状态
+  const [isDragging, setIsDragging] = useState(false); // 是否正在拖拽
+  const [showArrows, setShowArrows] = useState({ left: false, right: true }); // 箭头显示状态
 
   // 获取排行榜数据
-  const rankData = useRankData(mode, date, 1)
-  const data = rankData || []
+  const rankData = useRankData(mode, date, 1);
+  const data = rankData || [];
 
   // 处理滚动位置，控制箭头显示
   const handleScroll = useCallback(() => {
-    const target = container.current
-    if (!target) return
+    const target = container.current;
+    if (!target) return;
 
-    const { scrollLeft, scrollWidth, clientWidth } = target
+    const { scrollLeft, scrollWidth, clientWidth } = target;
     setShowArrows({
       left: scrollLeft > 0, // 左侧可滚动
       right: scrollWidth - scrollLeft - clientWidth > 0, // 右侧可滚动
-    })
-  }, [])
+    });
+  }, []);
 
   // 处理箭头点击滚动
   const scrollByArrow = (direction: 'left' | 'right') => {
-    const target = container.current
-    if (!target) return
+    const target = container.current;
+    if (!target) return;
 
     // 每次滚动容器宽度的 60%
-    const moveDistance = target.clientWidth * 0.6
-    const newPosition = target.scrollLeft + (direction === 'left' ? -moveDistance : moveDistance)
+    const moveDistance = target.clientWidth * 0.6;
+    const newPosition =
+      target.scrollLeft + (direction === 'left' ? -moveDistance : moveDistance);
 
-    target.scrollTo({ left: Math.max(0, newPosition), behavior: 'smooth' })
-  }
+    target.scrollTo({ left: Math.max(0, newPosition), behavior: 'smooth' });
+  };
 
   // 拖动开始处理
   const handleMouseDown = (e: React.MouseEvent) => {
-    if (!container.current) return
-    setIsDragging(true)
-    dragStart.current = e.clientX
-    scrollStart.current = container.current.scrollLeft
-  }
+    if (!container.current) return;
+    setIsDragging(true);
+    dragStart.current = e.clientX;
+    scrollStart.current = container.current.scrollLeft;
+  };
 
   // 拖动过程处理
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !container.current) return
-    e.preventDefault()
-    container.current.scrollLeft = scrollStart.current + (dragStart.current - e.clientX)
-  }
+    if (!isDragging || !container.current) return;
+    e.preventDefault();
+    container.current.scrollLeft =
+      scrollStart.current + (dragStart.current - e.clientX);
+  };
 
   // 初始化数据加载完成后设置状态
   useEffect(() => {
-    if (!init && data.length > 0) setInit(true)
-  }, [data, init])
+    if (!init && data.length > 0) setInit(true);
+  }, [data, init]);
 
   // 监听滚动事件
   useEffect(() => {
-    const target = container.current
-    if (!target) return
+    const target = container.current;
+    if (!target) return;
 
-    target.addEventListener('scroll', handleScroll)
-    return () => target.removeEventListener('scroll', handleScroll)
-  }, [handleScroll])
+    target.addEventListener('scroll', handleScroll);
+    return () => target.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
 
   // 渲染导航箭头
   const renderArrow = (direction: 'left' | 'right') => (
@@ -104,15 +106,15 @@ const ScrollContainer = memo(({ mode, date }: ScrollContainerProps) => {
       onClick={() => scrollByArrow(direction)}
     >
       {direction === 'left' ? (
-        <IconArrowLeft className='rounded-2xl bg-gray-400 dark:bg-zinc-100/20' />
+        <IconArrowLeft className="rounded-2xl bg-gray-400 dark:bg-zinc-100/20" />
       ) : (
-        <IconArrowRight className='rounded-2xl bg-gray-400 dark:bg-zinc-100/20' />
+        <IconArrowRight className="rounded-2xl bg-gray-400 dark:bg-zinc-100/20" />
       )}
     </MyArrow>
-  )
+  );
 
   return (
-    <div className='relative flex gap-2 h-auto w-full overflow-x-scroll scrollbar-hide rounded-lg flex-shrink-0 pb-3'>
+    <div className="relative flex gap-2 h-auto w-full overflow-x-scroll scrollbar-hide rounded-lg flex-shrink-0 pb-3">
       {/* 初始化完成后显示导航箭头 */}
       {init && (
         <>
@@ -135,13 +137,13 @@ const ScrollContainer = memo(({ mode, date }: ScrollContainerProps) => {
       >
         {/* 加载状态显示骨架屏 */}
         {!init ? (
-          <Skeleton className='w-full h-full' />
+          <Skeleton className="w-full h-full" />
         ) : (
           // 渲染图片列表
           data.map(({ id, title, image_urls, user }, index) => (
             <div
               key={id}
-              className='h-full w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/4 xl:w-1/5 rounded-lg flex-shrink-0'
+              className="h-full w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/4 xl:w-1/5 rounded-lg flex-shrink-0"
             >
               <ImageContainer
                 ImgSrc={image_urls.square_medium}
@@ -155,9 +157,9 @@ const ScrollContainer = memo(({ mode, date }: ScrollContainerProps) => {
         )}
       </div>
     </div>
-  )
-})
+  );
+});
 
-ScrollContainer.displayName = 'ScrollContainer'
+ScrollContainer.displayName = 'ScrollContainer';
 
-export default ScrollContainer
+export default ScrollContainer;

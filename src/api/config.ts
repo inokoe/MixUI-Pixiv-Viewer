@@ -1,7 +1,7 @@
-import { getCurrentDomain } from '@/utils/pixiv/Tools'
-import { Illust } from './http/base.types'
+import { getCurrentDomain } from '@/utils/pixiv/Tools';
+import { Illust } from './http/base.types';
 
-export const PIXIV_HTTP_API_DOMAIN = '/'
+export const PIXIV_HTTP_API_DOMAIN = '/';
 // Source: https://rainchan.win/projects/pximg => https://px.s.rainchan.win
 // Scoure:https://pixiv.cat/ => https://i.pixiv.re | https://i.pixiv.cat
 // Cloudflare Worker 多域名分流，防止单域名并发限制
@@ -11,26 +11,26 @@ export const CLOUDFLARE_WORKER_DOMAIN = [
   'picdn.0002523.xyz',
   'piicdn.0002523.xyz',
   'piiicdn.0002523.xyz',
-]
+];
 
 // Vercel 部署代理
-export const SERVER_DOMAIN = [`${getCurrentDomain()}/cdn`]
+export const SERVER_DOMAIN = [`${getCurrentDomain()}/cdn`];
 
 // 策略一、白天使用cloudflare worker，夜晚使用vercel代理，节约Vercel流量
 // export const MY_PROXY_API = isEarlyMorning() ? CLOUDFLARE_WORKER_DOMAIN : SERVER_DOMAIN
 // 策略二、使用Vercel部署代理
 // export const MY_PROXY_API = SERVER_DOMAIN
 // 策略三、使用cloudflare worker
-export const MY_PROXY_API = CLOUDFLARE_WORKER_DOMAIN
+export const MY_PROXY_API = CLOUDFLARE_WORKER_DOMAIN;
 
-export const PIXIV_IMAGE_PROXY_DOMAIN = MY_PROXY_API[0]
+export const PIXIV_IMAGE_PROXY_DOMAIN = MY_PROXY_API[0];
 export const AXIOS_DEFAULT_HEADERS = {
   'Cache-Control': 'no-cache',
-}
-export const AXIOS_DEFAULT_TIMEOUT = 10000
-export const AXIOS_DEFAULT_RETRIES = 3
-export const AXIOS_DEFAULT_RETRY_DELAY = 1000
-export const DEV_DOMAIN = 'mui-dev.nanoc.work'
+};
+export const AXIOS_DEFAULT_TIMEOUT = 10000;
+export const AXIOS_DEFAULT_RETRIES = 3;
+export const AXIOS_DEFAULT_RETRY_DELAY = 1000;
+export const DEV_DOMAIN = 'mui-dev.nanoc.work';
 
 export const DEV_MODE_DATA: Illust = {
   id: 126483589,
@@ -44,7 +44,8 @@ export const DEV_MODE_DATA: Illust = {
     large:
       'https://i.pximg.net/c/600x1200_90/img-master/img/2025/01/23/07/30/04/126483589_p0_master1200.jpg',
   },
-  caption: 'ご飯などのスケッチ<br /><br />フライパンを出した日は丁寧な暮らしだと思います',
+  caption:
+    'ご飯などのスケッチ<br /><br />フライパンを出した日は丁寧な暮らしだと思います',
   restrict: 0,
   user: {
     id: 33333,
@@ -92,7 +93,8 @@ export const DEV_MODE_DATA: Illust = {
           'https://i.pximg.net/c/540x540_70/img-master/img/2025/01/23/07/30/04/126483589_p0_master1200.jpg',
         large:
           'https://i.pximg.net/c/600x1200_90/img-master/img/2025/01/23/07/30/04/126483589_p0_master1200.jpg',
-        original: 'https://i.pximg.net/img-original/img/2025/01/23/07/30/04/126483589_p0.jpg',
+        original:
+          'https://i.pximg.net/img-original/img/2025/01/23/07/30/04/126483589_p0.jpg',
       },
     },
     {
@@ -103,7 +105,8 @@ export const DEV_MODE_DATA: Illust = {
           'https://i.pximg.net/c/540x540_70/img-master/img/2025/01/23/07/30/04/126483589_p1_master1200.jpg',
         large:
           'https://i.pximg.net/c/600x1200_90/img-master/img/2025/01/23/07/30/04/126483589_p1_master1200.jpg',
-        original: 'https://i.pximg.net/img-original/img/2025/01/23/07/30/04/126483589_p1.jpg',
+        original:
+          'https://i.pximg.net/img-original/img/2025/01/23/07/30/04/126483589_p1.jpg',
       },
     },
   ],
@@ -116,4 +119,4 @@ export const DEV_MODE_DATA: Illust = {
   illust_ai_type: 1,
   illust_book_style: 0,
   comment_access_control: 0,
-}
+};

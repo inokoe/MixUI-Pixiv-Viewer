@@ -1,27 +1,27 @@
-import { setSideBarMenuSelected } from '@/store/reducers/ui'
-import { useEffect, useRef } from 'react'
-import PageLayoutHeader from '@/components/Pixiv/HeaderLayout/index'
-import { useDispatch } from 'react-redux'
-import { Outlet, useLocation } from 'react-router-dom'
-import { initalRankData } from '@/lib/pixiv/intial'
-import PageLayout from '../Layout/PageLayout'
-import { useNProgress } from '@/hooks/useNProgress'
+import { setSideBarMenuSelected } from '@/store/reducers/ui';
+import { useEffect, useRef } from 'react';
+import PageLayoutHeader from '@/components/Pixiv/HeaderLayout/index';
+import { useDispatch } from 'react-redux';
+import { Outlet, useLocation } from 'react-router-dom';
+import { initalRankData } from '@/lib/pixiv/intial';
+import PageLayout from '../Layout/PageLayout';
+import { useNProgress } from '@/hooks/useNProgress';
 
 const Pixiv = () => {
-  const dispatch = useDispatch()
-  const location = useLocation()
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
-  useNProgress()
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  useNProgress();
   useEffect(() => {
-    dispatch(setSideBarMenuSelected(1))
-    initalRankData(dispatch)
-  }, [dispatch])
+    dispatch(setSideBarMenuSelected(1));
+    initalRankData(dispatch);
+  }, [dispatch]);
 
   useEffect(() => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTop = 0
+      scrollContainerRef.current.scrollTop = 0;
     }
-  }, [location])
+  }, [location]);
 
   return (
     <PageLayout>
@@ -29,12 +29,12 @@ const Pixiv = () => {
         <PageLayoutHeader />
         <div
           ref={scrollContainerRef}
-          className='w-full flex-1 overflow-y-scroll overflow-x-hidden flex flex-col scrollbar-hide transition-all duration-300 ease-in-out z-10'
+          className="w-full flex-1 overflow-y-scroll overflow-x-hidden flex flex-col scrollbar-hide transition-all duration-300 ease-in-out z-10"
         >
           <Outlet />
         </div>
       </>
     </PageLayout>
-  )
-}
-export default Pixiv
+  );
+};
+export default Pixiv;

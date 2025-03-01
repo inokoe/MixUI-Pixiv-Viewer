@@ -1,14 +1,21 @@
-import { useEffect, useRef, memo, useCallback } from 'react'
-import L from 'leaflet'
-import 'leaflet/dist/leaflet.css'
+import { useEffect, useRef, memo, useCallback } from 'react';
+import {
+  map,
+  tileLayer,
+  marker,
+  divIcon,
+  Map as LeafletMap,
+  Marker as LeafletMarker,
+} from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 interface PerformanceMapProps {
-  latitude: number
-  longitude: number
+  latitude: number;
+  longitude: number;
 }
 
 const createRedIcon = () =>
-  L.divIcon({
+  divIcon({
     className: 'custom-marker',
     html: `<div style="
     width: 24px;
@@ -20,23 +27,23 @@ const createRedIcon = () =>
   "></div>`,
     iconSize: [24, 24],
     iconAnchor: [12, 12],
-  })
+  });
 
 const PerformanceMap = memo(({ latitude, longitude }: PerformanceMapProps) => {
-  const mapRef = useRef<L.Map | null>(null)
-  const markerRef = useRef<L.Marker | null>(null)
-  const mapContainerRef = useRef<HTMLDivElement>(null)
+  const mapRef = useRef<LeafletMap | null>(null);
+  const markerRef = useRef<LeafletMarker | null>(null);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
 
   const initializeMap = useCallback(() => {
-    if (!mapContainerRef.current || mapRef.current) return
+    if (!mapContainerRef.current || mapRef.current) return;
 
-    mapRef.current = L.map(mapContainerRef.current, {
+    mapRef.current = map(mapContainerRef.current, {
       attributionControl: false,
       // 地图缩放+-
       zoomControl: false,
-    }).setView([latitude, longitude], 9)
+    }).setView([latitude, longitude], 9);
 
-    L.tileLayer(
+    tileLayer(
       'https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',
       {
         minZoom: 3,
@@ -44,48 +51,43 @@ const PerformanceMap = memo(({ latitude, longitude }: PerformanceMapProps) => {
         subdomains: ['1', '2', '3', '4'],
         attribution: '&copy; <a href="https://www.amap.com/">高德地图</a>',
       }
-    ).addTo(mapRef.current)
-  }, [latitude, longitude])
+    ).addTo(mapRef.current);
+  }, [latitude, longitude]);
 
   const updateMapView = useCallback(() => {
-    if (!mapRef.current) return
+    if (!mapRef.current) return;
 
-    mapRef.current.setView([latitude, longitude], 9)
+    mapRef.current.setView([latitude, longitude], 9);
 
     if (markerRef.current) {
-      markerRef.current.remove()
+      markerRef.current.remove();
     }
 
-    markerRef.current = L.marker([latitude, longitude], { icon: createRedIcon() })
+    markerRef.current = marker([latitude, longitude], { icon: createRedIcon() })
       .addTo(mapRef.current)
-      .bindPopup(`位置: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`)
-  }, [latitude, longitude])
+      .bindPopup(`位置: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`);
+  }, [latitude, longitude]);
 
   useEffect(() => {
-    initializeMap()
+    initializeMap();
     return () => {
       if (markerRef.current) {
-        markerRef.current.remove()
+        markerRef.current.remove();
       }
       if (mapRef.current) {
-        mapRef.current.remove()
-        mapRef.current = null
+        mapRef.current.remove();
+        mapRef.current = null;
       }
-    }
-  }, [initializeMap])
+    };
+  }, [initializeMap]);
 
   useEffect(() => {
-    updateMapView()
-  }, [updateMapView])
+    updateMapView();
+  }, [updateMapView]);
 
-  return (
-    <div
-      ref={mapContainerRef}
-      className='w-full h-full'
-    />
-  )
-})
+  return <div ref={mapContainerRef} className="w-full h-full" />;
+});
 
-PerformanceMap.displayName = 'PerformanceMap'
+PerformanceMap.displayName = 'PerformanceMap';
 
-export default PerformanceMap
+export default PerformanceMap;

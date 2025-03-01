@@ -1,10 +1,10 @@
-import React, { useRef, memo, startTransition } from 'react'
-import { cn } from '@/lib/utils'
-import ImageCounter from '../ImageCounter'
-import ImageNavBar from '../ImageNavBar'
-import SkeletonLoading from '../Loading/SkeletonLoading'
-import usePreloadImage from '@/hooks/usePreloadImage'
-import useSkeletonImageLoad from '@/hooks/useSkeletonImageLoad'
+import React, { useRef, memo, startTransition } from 'react';
+import { cn } from '@/lib/utils';
+import ImageCounter from '../ImageCounter';
+import ImageNavBar from '../ImageNavBar';
+import SkeletonLoading from '../Loading/SkeletonLoading';
+import usePreloadImage from '@/hooks/usePreloadImage';
+import useSkeletonImageLoad from '@/hooks/useSkeletonImageLoad';
 
 /**
  * 创建全局共享的 IntersectionObserver
@@ -13,25 +13,25 @@ import useSkeletonImageLoad from '@/hooks/useSkeletonImageLoad'
 const imageObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      const target = entry.target as HTMLElement
-      const img = target.querySelector('img')
-      const src = img?.dataset.src
+      const target = entry.target as HTMLElement;
+      const img = target.querySelector('img');
+      const src = img?.dataset.src;
 
       if (img && src) {
-        const start = Date.now()
-        const MyImage = new Image()
+        const start = Date.now();
+        const MyImage = new Image();
 
         // 静态判断路由是否在show页面
-        const pathname = window.location.pathname
+        const pathname = window.location.pathname;
         // 等待时间
-        const waitTime = pathname.startsWith('/show/') ? 0 : 0
+        const waitTime = pathname.startsWith('/show/') ? 0 : 0;
 
         const cleanup = () => {
-          MyImage.onload = null
-          MyImage.onerror = null
-          img.onload = null
-          img.onerror = null
-        }
+          MyImage.onload = null;
+          MyImage.onerror = null;
+          img.onload = null;
+          img.onerror = null;
+        };
 
         const handleError = (flag: boolean) => {
           startTransition(() => {
@@ -42,67 +42,67 @@ const imageObserver = new IntersectionObserver(entries => {
                   success: flag,
                 },
               })
-            )
-          })
-          cleanup()
-        }
+            );
+          });
+          cleanup();
+        };
 
         MyImage.onload = () => {
           new Promise(resolve => setTimeout(resolve, waitTime))
             .then(() => {
-              return MyImage.decode()
+              return MyImage.decode();
             })
             .then(() => {
-              img.src = src
+              img.src = src;
               // 使用 Promise 处理图片显示
               return new Promise<void>((resolve, reject) => {
                 img.onload = () => {
                   requestAnimationFrame(() => {
-                    img.classList.remove('invisible')
-                    img.classList.replace('opacity-0', 'opacity-1')
-                    img.classList.replace('blur-sm', 'blur-0')
-                    resolve()
-                  })
-                }
-                img.onerror = () => reject('显示失败')
-              })
+                    img.classList.remove('invisible');
+                    img.classList.replace('opacity-0', 'opacity-1');
+                    img.classList.replace('blur-sm', 'blur-0');
+                    resolve();
+                  });
+                };
+                img.onerror = () => reject('显示失败');
+              });
             })
             .then(() => {
-              handleError(true)
+              handleError(true);
             })
             .catch(() => {
-              handleError(false)
+              handleError(false);
             })
-            .finally(cleanup)
-        }
+            .finally(cleanup);
+        };
 
-        MyImage.onerror = () => handleError(false)
-        MyImage.src = src
+        MyImage.onerror = () => handleError(false);
+        MyImage.src = src;
       }
-      imageObserver.unobserve(entry.target)
+      imageObserver.unobserve(entry.target);
     }
-  })
-})
+  });
+});
 
 interface ImageProps {
-  src: string
-  width?: number
-  height?: number
-  className?: string
-  alt?: string
-  style?: React.CSSProperties
-  onClick?: () => void
-  objectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down'
-  isObserver?: boolean
-  countLength?: number
-  countIndex?: number
-  countClassName?: string
+  src: string;
+  width?: number;
+  height?: number;
+  className?: string;
+  alt?: string;
+  style?: React.CSSProperties;
+  onClick?: () => void;
+  objectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
+  isObserver?: boolean;
+  countLength?: number;
+  countIndex?: number;
+  countClassName?: string;
   imgDownloadInfo?: {
-    original: string
-    large: string
-    medium: string
-  }
-  preload?: string
+    original: string;
+    large: string;
+    medium: string;
+  };
+  preload?: string;
 }
 
 /**
@@ -125,17 +125,17 @@ const SkeletonImage = memo<ImageProps>(
     imgDownloadInfo,
     preload,
   }) => {
-    const containerRef = useRef<HTMLDivElement>(null)
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const { isLoading } = useSkeletonImageLoad({
       src,
       isObserver,
       containerRef,
       imageObserver,
-    })
+    });
 
     // 预加载图片
-    usePreloadImage(preload || '', isLoading)
+    usePreloadImage(preload || '', isLoading);
 
     return (
       <div
@@ -149,12 +149,12 @@ const SkeletonImage = memo<ImageProps>(
         {/* 加载时显示骨架屏 */}
         {!isLoading && (
           <SkeletonLoading
-            className='h-full w-full'
+            className="h-full w-full"
             showMsg={imgDownloadInfo ? true : false}
           />
         )}
         {/* 图片容器 */}
-        <div className='h-full w-full flex flex-col overflow-hidden select-none'>
+        <div className="h-full w-full flex flex-col overflow-hidden select-none">
           <img
             data-src={src}
             src={!isObserver ? src : ''}
@@ -162,7 +162,9 @@ const SkeletonImage = memo<ImageProps>(
             onClick={onClick}
             className={cn(
               'h-full w-full transition-all duration-700 ease-in-out',
-              !isObserver ? 'opacity-1 blur-0 visible' : 'opacity-0 invisible blur-sm',
+              !isObserver
+                ? 'opacity-1 blur-0 visible'
+                : 'opacity-0 invisible blur-sm',
               {
                 'object-contain': objectFit === 'contain',
                 'object-cover': objectFit === 'cover',
@@ -171,7 +173,7 @@ const SkeletonImage = memo<ImageProps>(
                 'object-scale-down': objectFit === 'scale-down',
               }
             )}
-            decoding='async'
+            decoding="async"
           />
         </div>
         {countLength && countIndex !== undefined && (
@@ -183,10 +185,10 @@ const SkeletonImage = memo<ImageProps>(
         )}
         {imgDownloadInfo && <ImageNavBar imgDownloadInfo={imgDownloadInfo} />}
       </div>
-    )
+    );
   }
-)
+);
 
-SkeletonImage.displayName = 'SkeletonImage'
+SkeletonImage.displayName = 'SkeletonImage';
 
-export default SkeletonImage
+export default SkeletonImage;

@@ -1,10 +1,10 @@
-import { memo } from 'react'
-import { cn } from '@/lib/utils'
+import { memo } from 'react';
+import { cn } from '@/lib/utils';
 
 interface TextNodeProps {
-  label: string
-  value: string
-  className?: string
+  label: string;
+  value: string;
+  className?: string;
 }
 
 /**
@@ -21,11 +21,11 @@ const TextNode = memo<TextNodeProps>(({ label, value, className }) => {
       )}
       title={value} // 添加 title 属性以支持鼠标悬停显示完整内容
     >
-      <span className='font-bold'>{value}</span>
+      <span className="font-bold">{value}</span>
     </div>
-  )
-})
+  );
+});
 
-TextNode.displayName = 'TextNode'
+TextNode.displayName = 'TextNode';
 
-export default TextNode
+export default TextNode;

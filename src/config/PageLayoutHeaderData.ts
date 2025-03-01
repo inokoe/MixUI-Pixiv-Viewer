@@ -38,7 +38,7 @@ const PageLayoutHeaderData = [
     label: '查看',
     show: false,
   },
-]
+];
 
 export const RankTags = [
   {
@@ -65,7 +65,7 @@ export const RankTags = [
     en: 'month',
     path: '/rank/month',
   },
-]
+];
 
 // 搜索模式选项
 export const SearchModeOptions = [
@@ -144,6 +144,6 @@ export const SearchModeOptions = [
       },
     ],
   },
-]
+];
 
-export default PageLayoutHeaderData
+export default PageLayoutHeaderData;

@@ -1,28 +1,28 @@
-import { startTransition, useEffect } from 'react'
+import { startTransition, useEffect } from 'react';
 
 const usePreloadImage = (preload: string, isLoading: boolean) => {
   useEffect(() => {
-    if (!preload || !isLoading) return
+    if (!preload || !isLoading) return;
 
-    const preloadImg = new Image()
+    const preloadImg = new Image();
 
     const preloadImage = () => {
       preloadImg.onload = () => {
         preloadImg.decode().finally(() => {
-          preloadImg.onload = null
-        })
-      }
-      preloadImg.src = preload
-    }
+          preloadImg.onload = null;
+        });
+      };
+      preloadImg.src = preload;
+    };
 
     startTransition(() => {
-      preloadImage()
-    })
+      preloadImage();
+    });
 
     return () => {
-      preloadImg.src = ''
-    }
-  }, [preload, isLoading])
-}
+      preloadImg.src = '';
+    };
+  }, [preload, isLoading]);
+};
 
-export default usePreloadImage
+export default usePreloadImage;

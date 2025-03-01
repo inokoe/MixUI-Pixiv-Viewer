@@ -1,15 +1,21 @@
-import { IconArrowsMaximize, IconArrowsMinimize } from '@tabler/icons-react'
-import { memo, useCallback, useState } from 'react'
-import { cn } from '@/lib/utils'
+import { IconArrowsMaximize, IconArrowsMinimize } from '@tabler/icons-react';
+import { memo, useCallback, useState } from 'react';
+import { cn } from '@/lib/utils';
 
 const FullScreenButton = memo(
-  ({ className, toggleFullscreen }: { className?: string; toggleFullscreen: () => void }) => {
-    const [isFullscreen, setIsFullscreen] = useState(false)
+  ({
+    className,
+    toggleFullscreen,
+  }: {
+    className?: string;
+    toggleFullscreen: () => void;
+  }) => {
+    const [isFullscreen, setIsFullscreen] = useState(false);
 
     const handleToggleFullscreen = useCallback(() => {
-      setIsFullscreen(prev => !prev)
-      toggleFullscreen()
-    }, [toggleFullscreen])
+      setIsFullscreen(prev => !prev);
+      toggleFullscreen();
+    }, [toggleFullscreen]);
 
     return (
       <div
@@ -20,18 +26,18 @@ const FullScreenButton = memo(
         )}
         onClick={handleToggleFullscreen}
       >
-        <div className=''>
+        <div className="">
           {isFullscreen ? (
-            <IconArrowsMinimize className='w-5 h-5 text-gray-200 animate-opacity-up animate-duration-300 ease-in-out' />
+            <IconArrowsMinimize className="w-5 h-5 text-gray-200 animate-opacity-up animate-duration-300 ease-in-out" />
           ) : (
-            <IconArrowsMaximize className='w-5 h-5 text-gray-200 animate-opacity-up animate-duration-300 ease-in-out' />
+            <IconArrowsMaximize className="w-5 h-5 text-gray-200 animate-opacity-up animate-duration-300 ease-in-out" />
           )}
         </div>
       </div>
-    )
+    );
   }
-)
+);
 
-FullScreenButton.displayName = 'ImageCounter'
+FullScreenButton.displayName = 'ImageCounter';
 
-export default FullScreenButton
+export default FullScreenButton;
