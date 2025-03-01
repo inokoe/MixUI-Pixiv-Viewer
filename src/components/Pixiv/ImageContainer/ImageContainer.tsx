@@ -36,7 +36,7 @@ const ImageContainer = memo(
 
         // 如果移动距离小于阈值，则认为是点击
         if (deltaX < CLICK_THRESHOLD && deltaY < CLICK_THRESHOLD) {
-          async function navigateToShow() {
+          const navigateToShow = async () => {
             if (fullData) {
               await dispatch(setShowHistory(fullData))
               navigate(`/show/${fullData.id}`)

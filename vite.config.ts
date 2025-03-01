@@ -24,7 +24,12 @@ export default defineConfig({
   define: {
     __APP_VERSION__: JSON.stringify(version),
   },
+  esbuild: {
+    // 使用esbuild进行ES6降级
+    target: ['es2015'],
+  },
   build: {
+    target: 'es2015', // 构建输出目标为ES6(ES2015)
     rollupOptions: {
       output: {
         manualChunks: {
