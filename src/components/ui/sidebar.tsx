@@ -98,6 +98,10 @@ export const DesktopSidebar = ({
           'h-full px-4 py-4 hidden  md:flex md:flex-col bg-neutral-100 dark:bg-neutral-800 w-[60px] flex-shrink-0',
           className
         )}
+        style={{
+          transform: 'translateZ(0)', // 启用GPU加速
+          willChange: 'width',
+        }}
         animate={{
           width: animate ? (open ? '300px' : '60px') : '300px',
         }}
@@ -135,8 +139,12 @@ export const MobileSidebar = ({ className, children, ...props }: React.Component
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: '-100%', opacity: 0 }}
               transition={{
-                duration: 0.3,
-                ease: 'easeInOut',
+                duration: 0.25,
+                ease: 'easeOut',
+              }}
+              style={{
+                transform: 'translateZ(0)', // 启用GPU加速
+                willChange: 'transform, opacity',
               }}
               className={cn(
                 'fixed h-full w-full inset-0 bg-white dark:bg-neutral-900 p-10 z-[100] flex flex-col justify-between',
@@ -175,7 +183,7 @@ export const SidebarLink = ({
     <MyLink
       to={link.href}
       className={cn(
-        'flex items-center justify-start gap-2  group/sidebar py-2 hover:cursor-pointer',
+        'flex items-center justify-start gap-2 group/sidebar py-2 hover:cursor-pointer',
         className,
         link.id === SideBarMenuSelected ? 'animate-pulse' : ''
       )}
@@ -184,9 +192,17 @@ export const SidebarLink = ({
       {link.icon}
 
       <motion.span
+        style={{
+          transform: 'translateZ(0)', // 启用GPU加速
+        }}
         animate={{
-          display: animate ? (open ? 'inline-block' : 'none') : 'inline-block',
+          visibility: animate ? (open ? 'visible' : 'hidden') : 'visible',
           opacity: animate ? (open ? 1 : 0) : 1,
+        }}
+        transition={{
+          duration: 0.15,
+          delay: open ? 0.1 : 0, // 稍微延迟文本显示，让宽度先变化
+          ease: 'easeOut',
         }}
         className='text-neutral-700 dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0'
       >
