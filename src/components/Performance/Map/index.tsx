@@ -34,7 +34,7 @@ const PerformanceMap = memo(({ latitude, longitude }: PerformanceMapProps) => {
       attributionControl: false,
       // 地图缩放+-
       zoomControl: false,
-    }).setView([latitude, longitude], 10)
+    }).setView([latitude, longitude], 9)
 
     L.tileLayer(
       'https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',
@@ -50,7 +50,7 @@ const PerformanceMap = memo(({ latitude, longitude }: PerformanceMapProps) => {
   const updateMapView = useCallback(() => {
     if (!mapRef.current) return
 
-    mapRef.current.setView([latitude, longitude], 10)
+    mapRef.current.setView([latitude, longitude], 9)
 
     if (markerRef.current) {
       markerRef.current.remove()

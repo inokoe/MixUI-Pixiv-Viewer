@@ -5,7 +5,7 @@ import { Performance, LoadingComponent, About, Setting, History } from './LazyLo
 import Pixiv from '@/pages/Pixiv'
 import PixivHome from '@/pages/Pixiv/Home'
 import PixivRank from '@/pages/Pixiv/Rank'
-import PixivSearch from '@/pages/Search'
+import PixivSearch from '@/pages/Pixiv/Search'
 import PixivShow from '@/pages/Pixiv/Show'
 import { checkSearchBarLoader } from './Loader/CheckSearchBarLoader'
 
