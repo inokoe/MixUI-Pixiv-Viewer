@@ -31,9 +31,19 @@ export default defineConfig({
           'vendor-icons': ['@tabler/icons-react', 'lucide-react'],
           'vendor-charts': ['recharts'],
           'vendor-map': ['leaflet', 'leaflet/dist/leaflet.css'],
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-utils': ['date-fns', 'dayjs', 'lodash', 'axios'],
         },
       },
     },
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
+    sourcemap: process.env.NODE_ENV !== 'production',
     chunkSizeWarningLimit: 1000,
   },
 })
