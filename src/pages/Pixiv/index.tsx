@@ -29,7 +29,7 @@ const Pixiv = () => {
         <PageLayoutHeader />
         <div
           ref={scrollContainerRef}
-          className="w-full flex-1 overflow-y-scroll overflow-x-hidden flex flex-col scrollbar-hide transition-all duration-300 ease-in-out z-10"
+          className="w-full flex-1 overflow-y-scroll overflow-x-hidden flex flex-col scrollbar-hide transition-all duration-300 ease-in-out z-10 rounded-md"
         >
           <Outlet />
         </div>
