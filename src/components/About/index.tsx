@@ -8,6 +8,7 @@ import {
 import ReferenceLinks from './ReferenceLinks';
 import TechStack from './TechStack';
 import { IconHome, IconBuildingFactory2, IconRun } from '@tabler/icons-react';
+import { referenceThanksLinks, referenceDescLinks } from './Config';
 
 /**
  * 关于页面主体组件
@@ -27,8 +28,7 @@ const accordionSections: AccordionSection[] = [
     id: 'item-1',
     title: '关于该项目',
     icon: <IconHome className="w-4 h-4" />,
-    content:
-      '该项目的数据是基于Pixiv的API进行开发的，旨在提供一个方便的工具来查看和下载Pixiv上的图片。',
+    content: <ReferenceLinks referenceLinks={referenceDescLinks} />,
     defaultOpen: true,
   },
   {
@@ -41,7 +41,7 @@ const accordionSections: AccordionSection[] = [
     id: 'item-3',
     title: '鸣谢',
     icon: <IconRun className="w-4 h-4" />,
-    content: <ReferenceLinks />,
+    content: <ReferenceLinks referenceLinks={referenceThanksLinks} />,
   },
 ];
 

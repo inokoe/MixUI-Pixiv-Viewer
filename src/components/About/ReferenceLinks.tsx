@@ -1,33 +1,18 @@
 import { memo } from 'react';
+import { ReferenceLink } from './Config';
 
-interface ReferenceLink {
-  url: string;
-  text: string;
+interface ReferenceLinksProps {
+  referenceLinks: ReferenceLink[];
 }
 
-const referenceLinks: ReferenceLink[] = [
-  {
-    url: 'https://github.com/mixmoe/HibiAPI',
-    text: 'Pixiv Api : https://github.com/mixmoe/HibiAPI',
-  },
-  {
-    url: 'https://github.com/journey-ad/pixiv-viewer',
-    text: '✨ Pixiv Viewer : https://github.com/journey-ad/pixiv-viewer',
-  },
-  {
-    url: 'https://github.com/asadahimeka/pixiv-viewer',
-    text: '🪐 Pixiv Viewer : https://github.com/asadahimeka/pixiv-viewer',
-  },
-];
-
-const ReferenceLinks = memo(() => {
+const ReferenceLinks = memo<ReferenceLinksProps>(({ referenceLinks }) => {
   return (
     <div className="space-y-2">
       {referenceLinks.map(link => (
         <div key={link.url}>
           <a
-            href={link.url}
-            target="_blank"
+            href={link.url ? link.url : '#'}
+            target={link.url ? '_blank' : ''}
             rel="noopener noreferrer"
             className="hover:underline"
           >
